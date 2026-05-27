@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f6f9;
+  color: #1f2937;
+}
+
+.dashboard {
+  padding: 40px;
+}
+
+h1 { 
+  margin-bottom: 10px;
+}
+
+subtitle {
+  color: #6b7280;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
