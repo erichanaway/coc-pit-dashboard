@@ -32,6 +32,23 @@ document.querySelector('#app').innerHTML = `
   </div>
 `;
 
+document
+  .querySelector('#county-select')
+  .addEventListener('change', (event) => {
+
+    const selectedCounty = event.target.value;
+
+    const filteredRows = pitData.filter(row => 
+      row.geography === selectedCounty
+    );
+    
+    console.log(filteredRows);
+
+    document.querySelector('#status').textContent =
+      `${selectedCounty} selected. Geography rows found: ${filteredRows.length}`;
+  });
+
+
 async function loadWorkbook() {
   const response = await fetch(DATA_FILE);
   const arrayBuffer = await response.arrayBuffer();
