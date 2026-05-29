@@ -27,7 +27,11 @@ document.querySelector('#app').innerHTML = `
     </div>
 
     <div class="card">
-      <p id="status">Loading Excel workbook...</p>
+      <h3>Total Households</h3>
+      <p id="total-households">--</p>
+
+      <h3>Total People</h3>
+      <p id="total-people">--</p>
     </div>
   </div>
 `;
@@ -36,18 +40,43 @@ document
   .querySelector('#county-select')
   .addEventListener('change', (event) => {
 
-    const selectedCounty = event.target.value;
+    updateDashboard(event.target.value);
 
-    const filteredRows = pitData.filter(row => 
-      row.geography === selectedCounty
-    );
-    
-    console.log(filteredRows);
-
-    document.querySelector('#status').textContent =
-      `${selectedCounty} selected. Geography rows found: ${filteredRows.length}`;
   });
 
+  function updateDashboard(selectedCounty) {
+    const filteredRows = pitData.filter(row =>
+      row.geography ===selectedCounty
+    );
+
+    console.table(
+      filteredRows.map(row => ({
+        count_type: row.count_type,
+        section: row.section,
+        metric: row.metric,
+        value: row.value
+      }))
+    );
+
+    const totalHouseholds = filteredRows.find(row =>
+  row.section === 'Location and Family Type' &&
+  row.metric === 'Total' &&
+  row.count_type === 'Households'
+);
+
+const totalPeople = filteredRows.find(row =>
+  row.section === 'Location and Family Type' &&
+  row.metric === 'Total' &&
+  row.count_type === 'People'
+);
+
+document.querySelector('#total-households').textContent =
+  totalHouseholds?.value ?? '--';
+
+document.querySelector('#total-people').textContent =
+  totalPeople?.value ?? '--';
+  
+  }
 
 async function loadWorkbook() {
   const response = await fetch(DATA_FILE);
@@ -67,8 +96,9 @@ async function loadWorkbook() {
   console.log('First sheet:', firstSheetName);
   console.log('Rows:', rows);
 
-  document.querySelector('#status').textContent =
-    `Loaded workbook. First sheet: ${firstSheetName}. Rows found: ${rows.length}`;
+  updateDashboard('Combined');
+
+  
 }
 
 loadWorkbook();
