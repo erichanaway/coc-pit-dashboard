@@ -2,7 +2,7 @@ import './style.css';
 import * as XLSX from 'xlsx';
 import Chart from 'chart.js/auto';
 
-const DATA_FILE = '/data/pit_2026_dashboard_upload_data.xlsx';
+const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
 
 let pitData = [];
 
@@ -16,13 +16,24 @@ document.querySelector('#app').innerHTML = `
 
     <div class="controls">
 
-      <select id="county-select">
-        <option value="Combined">Combined</option>
-        <option value="Amador">Amador</option>
-        <option value="Calaveras">Calaveras</option>
-        <option value="Mariposa">Mariposa</option>
-        <option value="Tuolumne">Tuolumne</option>
-      </select>
+      <label>
+        Year
+        <select id="year-select">
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+        </select>
+      </label>
+
+      <label>
+        County
+        <select id="county-select">
+          <option value="Combined">Combined</option>
+           <option value="Amador">Amador</option>
+           <option value="Calaveras">Calaveras</option>
+           <option value="Mariposa">Mariposa</option>
+          <option value="Tuolumne">Tuolumne</option>
+        </select>
+      </label>
 
     </div>
 
@@ -37,16 +48,20 @@ document.querySelector('#app').innerHTML = `
 `;
 
 document
+  .querySelector('#year-select')
+  .addEventListener('change', updateDashboard);
+
+document
   .querySelector('#county-select')
-  .addEventListener('change', (event) => {
+  .addEventListener('change', updateDashboard);
 
-    updateDashboard(event.target.value);
-
-  });
-
-  function updateDashboard(selectedCounty) {
+  function updateDashboard() {
+    const selectedYear = document.querySelector('#year-select').value;
+    const selectedCounty = document.querySelector('#county-select').value;
+    
     const filteredRows = pitData.filter(row =>
-      row.geography ===selectedCounty
+      row.year == selectedYear &&
+      row.geography === selectedCounty
     );
 
     console.table(
@@ -96,7 +111,7 @@ async function loadWorkbook() {
   console.log('First sheet:', firstSheetName);
   console.log('Rows:', rows);
 
-  updateDashboard('Combined');
+  updateDashboard();
 
   
 }
