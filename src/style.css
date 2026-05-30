@@ -22,7 +22,7 @@ h1 {
   background: white;
   padding: 20px;
   border-radius: 12px;
-  max-width: 400px;
+  width: 220px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
@@ -44,4 +44,16 @@ select {
   padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
+}
+
+.kpi-grid {
+  display: flex;
+  gap: 20px;
+}
+
+.card p {
+  font-size: 48px;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 0;
 }

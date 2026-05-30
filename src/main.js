@@ -15,7 +15,6 @@ document.querySelector('#app').innerHTML = `
     </p>
 
     <div class="controls">
-
       <label>
         Year
         <select id="year-select">
@@ -28,21 +27,45 @@ document.querySelector('#app').innerHTML = `
         County
         <select id="county-select">
           <option value="Combined">Combined</option>
-           <option value="Amador">Amador</option>
-           <option value="Calaveras">Calaveras</option>
-           <option value="Mariposa">Mariposa</option>
+          <option value="Amador">Amador</option>
+          <option value="Calaveras">Calaveras</option>
+          <option value="Mariposa">Mariposa</option>
           <option value="Tuolumne">Tuolumne</option>
         </select>
       </label>
-
     </div>
 
-    <div class="card">
-      <h3>Total Households</h3>
-      <p id="total-households">--</p>
+    <div class="kpi-grid">
+      <div class="card">
+        <h3>Total Households</h3>
+        <p id="total-households">--</p>
+      </div>
 
-      <h3>Total People</h3>
-      <p id="total-people">--</p>
+      <div class="card">
+        <h3>Total People</h3>
+        <p id="total-people">--</p>
+      </div>
+
+      <div class="card">
+        <h3>Sheltered People</h3>
+        <p id="sheltered-people">--</p>
+      </div>
+
+      <div class="card">
+        <h3>Unsheltered people</h3>
+        <p id="unsheltered-people">--</p>
+      </div>
+
+      <div class="card">
+        <h3> Sheltered Households</h3>
+        <p id="sheltered-households">--</p>
+      </div>
+
+      <div class="card">
+        <h3>Unsheltered Households</h3>
+        <p id="unsheltered-households">--</p>
+      </div>
+
     </div>
   </div>
 `;
@@ -55,43 +78,114 @@ document
   .querySelector('#county-select')
   .addEventListener('change', updateDashboard);
 
-  function updateDashboard() {
-    const selectedYear = document.querySelector('#year-select').value;
-    const selectedCounty = document.querySelector('#county-select').value;
-    
-    const filteredRows = pitData.filter(row =>
-      row.year == selectedYear &&
-      row.geography === selectedCounty
-    );
+function updateDashboard() {
+  const selectedYear = document.querySelector('#year-select').value;
+  const selectedCounty = document.querySelector('#county-select').value;
 
-    console.table(
-      filteredRows.map(row => ({
-        count_type: row.count_type,
-        section: row.section,
-        metric: row.metric,
-        value: row.value
-      }))
-    );
+  const filteredRows = pitData.filter(row =>
+    row.year == selectedYear &&
+    row.geography === selectedCounty
+  );
 
-    const totalHouseholds = filteredRows.find(row =>
-  row.section === 'Location and Family Type' &&
-  row.metric === 'Total' &&
-  row.count_type === 'Households'
-);
+  console.table(
+    filteredRows.map(row => ({
+      count_type: row.count_type,
+      section: row.section,
+      metric: row.metric,
+      value: row.value
+    }))
+  );
 
-const totalPeople = filteredRows.find(row =>
-  row.section === 'Location and Family Type' &&
-  row.metric === 'Total' &&
-  row.count_type === 'People'
-);
+  const totalHouseholds = filteredRows.find(row =>
+    row.section === 'Location and Family Type' &&
+    row.metric === 'Total' &&
+    row.count_type === 'Households'
+  );
 
-document.querySelector('#total-households').textContent =
-  totalHouseholds?.value ?? '--';
+  const totalPeople = filteredRows.find(row =>
+    row.section === 'Location and Family Type' &&
+    row.metric === 'Total' &&
+    row.count_type === 'People'
+  );
 
-document.querySelector('#total-people').textContent =
-  totalPeople?.value ?? '--';
-  
-  }
+  const shelteredPeopleRows = filteredRows.filter(row =>
+    row.section === 'Location and Family Type' &&
+    row.count_type === 'People' &&
+    (
+      row.metric === 'ES Adults Only' ||
+      row.metric === 'ES Houses w/children' ||
+      row.metric === 'TH Adults Only' ||
+      row.metric === 'TH Households w/children'
+    )
+  );
+
+  const shelteredPeople = shelteredPeopleRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  const unshelteredPeopleRows = filteredRows.filter(row =>
+    row.section === 'Location and Family Type' &&
+    row.count_type === 'People' &&
+    (
+      row.metric === 'Unsheltered Adults Only' ||
+      row.metric === 'Unsheltered w/children'
+    )
+  );
+
+  const unshelteredPeople = unshelteredPeopleRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  const shelteredHouseholdsRows = filteredRows.filter(row =>
+    row.section === 'Location and Family Type' &&
+    row.count_type === 'Households' &&
+    (
+      row.metric === 'ES Houses w/children' ||
+      row.metric === 'ES Adults Only' ||
+      row.metric === 'TH Households w/children' ||
+      row.metric === 'TH Adults Only'
+    )
+  );
+
+  const shelteredHouseholds = shelteredHouseholdsRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  const unshelteredHouseholdsRows = filteredRows.filter(row =>
+    row.section === 'Location and Family Type' &&
+    row.count_type === 'Households' &&
+   (
+     row.metric === 'Unsheltered Adults Only' ||
+     row.metric === 'Unsheltered w/children'
+   )
+  );
+
+  const unshelteredHouseholds = unshelteredHouseholdsRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#total-households').textContent =
+    totalHouseholds?.value ?? '--';
+
+  document.querySelector('#total-people').textContent =
+    totalPeople?.value ?? '--';
+
+  document.querySelector('#sheltered-people').textContent =
+    shelteredPeople;
+
+  document.querySelector('#unsheltered-people').textContent = 
+    unshelteredPeople;
+
+  document.querySelector('#sheltered-households').textContent =
+    shelteredHouseholds;
+
+  document.querySelector('#unsheltered-households').textContent =
+    unshelteredHouseholds;
+}
 
 async function loadWorkbook() {
   const response = await fetch(DATA_FILE);
@@ -112,8 +206,6 @@ async function loadWorkbook() {
   console.log('Rows:', rows);
 
   updateDashboard();
-
-  
 }
 
 loadWorkbook();
