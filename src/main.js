@@ -205,6 +205,28 @@ function updateDashboard() {
     countyDonutChart.destroy();
   }
   
+  const countyNames = [
+    'Amador',
+    'Calaveras',
+    'Mariposa',
+    'Tuolumne'
+  ];
+
+  const countyTotals = countyNames.map(county => {
+
+    const countyRows = pitData.filter(row => 
+      row.year == selectedYear &&
+      row.geography ===county
+    );
+
+    const totalPeopleRow = countyRows.find(row =>
+      row.section === 'Location and Family Type' &&
+      row.metric === 'Total' &&
+      row.count_type === 'People'
+    );
+
+    return Number(totalPeopleRow?.value || 0);
+  });
 
   const ctx = document
   .getElementById('composition-chart')
@@ -220,14 +242,18 @@ function updateDashboard() {
           data: [
             shelteredHouseholds,
             unshelteredHouseholds
-          ]
+          ],
+          backgroundColor: '#4e79a7',
+          borderRadius: 6
         },
         {
           label: 'People',
           data: [
             shelteredPeople,
             unshelteredPeople
-          ]
+          ],
+          backgroundColor: '#f28e2b',
+          borderRadius: 6
         }
       ]
     },
@@ -253,7 +279,17 @@ countyDonutChart = new Chart(donutCtx, {
     labels: ['Amador', 'Calaveras', 'Mariposa', 'Tuolumne'],
     datasets: [
       {
-        data: [142, 59, 77, 373]
+        data: countyTotals,
+
+        backgroundColor: [
+          '#4e79a7', // Amador
+          '#f28e2b', // Calaveras
+          '#59a14f', // Mariposa
+          '#e15759', // Tuolumne
+        ],
+
+        borderColor: '#ffffff',
+        borderWidth:2
       }
     ]
   },
@@ -262,7 +298,7 @@ countyDonutChart = new Chart(donutCtx, {
     plugins: {
       title: {
         display: true,
-        text: "County Distribution"
+        text: "County Share of Total Unhoused People"
       }
     }
   }
