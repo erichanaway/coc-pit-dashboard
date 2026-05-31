@@ -5,6 +5,7 @@ import Chart from 'chart.js/auto';
 const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
 
 let pitData = [];
+let compositionChart;
 
 document.querySelector('#app').innerHTML = `
   <div class="dashboard">
@@ -47,18 +48,13 @@ document.querySelector('#app').innerHTML = `
       </div>
 
       <div class="card">
+        <h3>Sheltered Households</h3>
+        <p id="sheltered-households">--</p>
+      </div>
+
+      <div class="card">
         <h3>Sheltered People</h3>
         <p id="sheltered-people">--</p>
-      </div>
-
-      <div class="card">
-        <h3>Unsheltered people</h3>
-        <p id="unsheltered-people">--</p>
-      </div>
-
-      <div class="card">
-        <h3> Sheltered Households</h3>
-        <p id="sheltered-households">--</p>
       </div>
 
       <div class="card">
@@ -66,6 +62,15 @@ document.querySelector('#app').innerHTML = `
         <p id="unsheltered-households">--</p>
       </div>
 
+      <div class="card">
+        <h3>Unsheltered People</h3>
+        <p id="unsheltered-people">--</p>
+      </div>
+
+    </div>
+
+    <div class="chart-card">
+      <canvas id="composition-chart"></canvas>
     </div>
   </div>
 `;
@@ -185,6 +190,46 @@ function updateDashboard() {
 
   document.querySelector('#unsheltered-households').textContent =
     unshelteredHouseholds;
+
+  if (compositionChart) {
+    compositionChart.destroy();
+  }
+
+  const ctx = document
+  .getElementById('composition-chart')
+  .getContext('2d');
+
+  compositionChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Sheltered', 'Unsheltered'],
+      datasets: [
+        {
+          label: 'Households',
+          data: [
+            shelteredHouseholds,
+            unshelteredHouseholds
+          ]
+        },
+        {
+          label: 'People',
+          data: [
+            shelteredPeople,
+            unshelteredPeople
+          ]
+        }
+      ]
+    },
+
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "Sheltered vs Unsheltered"
+        }
+      }
+    }
+  })
 }
 
 async function loadWorkbook() {
