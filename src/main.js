@@ -14,17 +14,19 @@ document.querySelector('#app').innerHTML = `
     <aside class="sidebar">
       <h2>CA-526</h2>
       <nav>
-        <a class="active" href="#">Overview</a>
-        <a href="#">Demographics</a>
-        <a href="#">Veterans</a>
-        <a href="#">Chronic</a>
-        <a href="#">Household Types</a>
-        <a href="#">County Comparison</a>
-        <a href="#">About</a>
+        <a class="active" href="#" data-page="overview">Overview</a>
+        <a href="#" data-page="demographics">Demographics</a>
+        <a href="#" data-page="veterans">Veterans</a>
+        <a href="#" data-page="chronic">Chronic</a>
+        <a href="#" data-page="household-types">Household Types</a>
+        <a href="#" data-page="county-comparison">County Comparison</a>
+        <a href="#" data-page="about">About</a>
       </nav>
     </aside>
 
     <main class="dashboard">
+
+      <div id="page-content">
 
     <h1>Central Sierra CoC PIT Dashboard</h1>
 
@@ -98,8 +100,10 @@ document.querySelector('#app').innerHTML = `
     </div>
 
     <div class="footer">
-     Central Sierra CoC PIT Dashboard v1.0<br>
+     Central Sierra CoC PIT Dashboard v1.12<br>
      Developed by Eric Hanaway
+    </div>
+
     </div>
   
   </main>
@@ -351,5 +355,43 @@ async function loadWorkbook() {
 
   updateDashboard();
 }
+
+document.querySelectorAll('.sidebar a').forEach(link => {
+
+  link.addEventListener('click', (event) => {
+
+    event.preventDefault();
+
+    const page = link.dataset.page;
+
+    document
+      .querySelectorAll('.sidebar a')
+      .forEach(a => a.classList.remove('active'));
+
+    link.classList.add('active');
+
+    if (page === 'overview') {
+      location.reload();
+      return;
+    }
+
+    document.querySelector('#page-content').innerHTML = `
+      <h1>${link.textContent}</h1>
+
+      <div class="coming-soon-card">
+        <h2>Coming Soon</h2>
+
+        <p>
+          This section is currently under development.
+        </p>
+
+        <p>
+          Planned for a future dashboard release.
+        </p>
+      </div>
+    `;
+  });
+
+});
 
 loadWorkbook();
