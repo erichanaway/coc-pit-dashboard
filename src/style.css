@@ -6,16 +6,18 @@ body {
 }
 
 .dashboard {
-  padding: 25px 40px;
+  padding: 20px 35px;
 }
 
 h1 { 
-  margin-bottom: 10px;
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 1.7rem;
 }
 
 .subtitle {
   color: #6b7280;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .card {
@@ -23,16 +25,16 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   background: white;
-  padding: 16px;
+  padding: 14px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  min-height: 85px;
+  min-height: 90px;
 }
 
 .controls {
   display: flex;
   gap: 20px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   align-items: center;
 }
 
@@ -58,39 +60,77 @@ select {
 
 .card p {
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: 6px;
   margin-bottom: 0;
-  font-size: 2.4rem;
+  font-size: 2.1rem;
 }
 
 .chart-card {
   background: white;
-  padding: 16px;
+  padding: 14px;
   border-radius: 12px;
   box-shadow: 0  2px 8px rgba(0,0,0,0.08);
-  height: 300px;
+  height: 245px;
 }
 
 .charts-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 16px;
 }
 
 .card h3 {
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
 }
 
 .chart-card canvas {
-  max-height: 270px;
+  max-height: 215px;
 }
 
 .footer {
   text-align: center;
   color: #6b7280;
   font-size: 0.85rem;
-  margin-top: 30px;
-  padding-bottom: 20px;
+  margin-top: 16px;
+  padding-bottom: 8px;
+}
+
+.app-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background-color: #111827;
+  color: white;
+  padding: 30px 20px;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+  margin-bottom: 30px;
+  font-size: 1.4rem;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar a {
+  color: #d1d5db;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: #2563eb;
+  color: white;
 }

@@ -9,7 +9,23 @@ let compositionChart;
 let countyDonutChart;
 
 document.querySelector('#app').innerHTML = `
-  <div class="dashboard">
+  <div class="app-layout">
+
+    <aside class="sidebar">
+      <h2>CA-526</h2>
+      <nav>
+        <a class="active" href="#">Overview</a>
+        <a href="#">Demographics</a>
+        <a href="#">Veterans</a>
+        <a href="#">Chronic</a>
+        <a href="#">Household Types</a>
+        <a href="#">County Comparison</a>
+        <a href="#">About</a>
+      </nav>
+    </aside>
+
+    <main class="dashboard">
+
     <h1>Central Sierra CoC PIT Dashboard</h1>
 
     <p class="subtitle">
@@ -85,6 +101,8 @@ document.querySelector('#app').innerHTML = `
      Central Sierra CoC PIT Dashboard v1.0<br>
      Developed by Eric Hanaway
     </div>
+  
+  </main>
 
   </div>
 `;
