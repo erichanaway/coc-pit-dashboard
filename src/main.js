@@ -6,6 +6,7 @@ const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
 
 let pitData = [];
 let compositionChart;
+let countyDonutChart;
 
 document.querySelector('#app').innerHTML = `
   <div class="dashboard">
@@ -72,6 +73,11 @@ document.querySelector('#app').innerHTML = `
     <div class="chart-card">
       <canvas id="composition-chart"></canvas>
     </div>
+
+    <div class="chart-card">
+      <canvas id="county-donut-chart"></canvas>
+    </div>
+
   </div>
 `;
 
@@ -195,6 +201,11 @@ function updateDashboard() {
     compositionChart.destroy();
   }
 
+  if (countyDonutChart) {
+    countyDonutChart.destroy();
+  }
+  
+
   const ctx = document
   .getElementById('composition-chart')
   .getContext('2d');
@@ -230,6 +241,32 @@ function updateDashboard() {
       }
     }
   })
+
+
+const donutCtx = document
+  .getElementById('county-donut-chart')
+  .getContext('2d');
+
+countyDonutChart = new Chart(donutCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Amador', 'Calaveras', 'Mariposa', 'Tuolumne'],
+    datasets: [
+      {
+        data: [142, 59, 77, 373]
+      }
+    ]
+  },
+
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: "County Distribution"
+      }
+    }
+  }
+});
 }
 
 async function loadWorkbook() {
