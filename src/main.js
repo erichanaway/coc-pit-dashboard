@@ -70,12 +70,20 @@ document.querySelector('#app').innerHTML = `
 
     </div>
 
-    <div class="chart-card">
-      <canvas id="composition-chart"></canvas>
+    <div class="charts-grid">
+
+     <div class="chart-card">
+       <canvas id="composition-chart"></canvas>
+     </div>
+
+     <div class="chart-card">
+       <canvas id="county-donut-chart"></canvas>
+     </div>
     </div>
 
-    <div class="chart-card">
-      <canvas id="county-donut-chart"></canvas>
+    <div class="footer">
+     Central Sierra CoC PIT Dashboard v1.0<br>
+     Developed by Eric Hanaway
     </div>
 
   </div>
