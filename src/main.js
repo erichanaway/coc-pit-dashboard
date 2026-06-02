@@ -375,6 +375,86 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       return;
     }
 
+    if (page === 'about') {
+      document.querySelector('#page-content').innerHTML = `
+      <h1>About</h1>
+      <div class="about-card">
+        <h2>What is the Point-in-Time Count?</h2>
+
+        <p>
+          The Point-in-Time (PIT) Count is an annual count of people
+          experiencing homelessness conducted during the last ten days
+          of January. Required by HUD, the PIT Count provides a
+          snapshot of homelessness within a community on a single night.
+       </p>
+      </div>
+
+      <div class="about-card">
+        <h2>About CA-526</h2>
+
+        <p>
+          The Central Sierra Continuum of Care serves four rural
+         counties in California:
+       </p>
+
+        <ul>
+          <li>Amador County</li>
+          <li>Calaveras County</li>
+          <li>Mariposa County</li>
+           <li>Tuolumne County</li>
+         </ul>
+       </div>
+
+       <div class="about-card">
+        <h2>About This Dashboard</h2>
+
+          <p>
+            This dashboard was developed to provide an interactive
+            view of Point-in-Time Count results across the
+            Central Sierra Continuum of Care.
+          </p>
+
+          <p>
+            Users can explore county-level results, compare
+            sheltered and unsheltered populations, and review
+            demographic information collected during the PIT Count.
+          </p>
+        </div>
+
+        <div class="about-card">
+          <h2>Data Sources</h2>
+
+            <p>
+              Data presented in this dashboard is compiled from
+              multiple sources used to support the annual Point-in-Time
+              Count conducted by the Central Sierra Continuum of Care.
+            </p>
+
+            <ul>
+              <li>Homeless Management Information System (HMIS) records</li>
+              <li>Unsheltered Point-in-Time Count survey responses</li>
+              <li>Sheltered Point-in-Time Count reporting submissions</li>
+              <li>HUD Point-in-Time Count reporting requirements and methodologies</li>
+            </ul>
+          </div>
+
+        <div class="about-card">
+          <h2>Dashboard Information</h2>
+
+            <p><strong>Version:</strong> 1.12</p>
+
+            <p><strong>Developed By:</strong> Eric Hanaway</p>
+
+            <p>
+              HMIS Manager<br>
+              Central Sierra Continuum of Care (CA-526)
+            </p>
+        </div>
+      `;
+
+      return;
+    }
+
     document.querySelector('#page-content').innerHTML = `
       <h1>${link.textContent}</h1>
 

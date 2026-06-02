@@ -134,3 +134,25 @@ select {
   background: #2563eb;
   color: white;
 }
+
+.about-card {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  max-width: 1000px;
+}
+
+.about-card h2 {
+  margin-bottom: 12px;
+}
+
+.about-card p {
+  line-height: 1.6;
+}
+
+.about-card ul {
+  margin-top: 12px;
+  padding-left: 20px;
+}
