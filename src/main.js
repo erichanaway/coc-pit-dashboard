@@ -455,6 +455,81 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       return;
     }
 
+   if (page === 'demographics') {
+    document.querySelector('#page-content').innerHTML = `
+      <h1>Demographics</h1>
+
+      <p class='subtitle'>
+        Demographics breakdown of people counted during the PIT count.
+      </p>
+
+      <div class="controls">
+        <label>
+          Year
+          <select id="demo-year-select">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+          </select>
+        </label>
+
+        <label>
+          County
+          <select id="demo-county-select">
+            <option value="Combined">Combined</option>
+            <option value="Amador">Amador</option>
+            <option value="Calaeras">Calaveras</option>
+            <option value="Mariposa">Mariposa</option>
+            <option value="Tuolumne">Tuolumne</option>
+          </select>
+        </label>
+
+        <label> 
+          Population
+            <select id="demo-population-select">
+              <option value="All">All</option>
+              <option value="Sheltered">Sheltered</option>
+              <option value="Unsheltered">Unsheltered</option>
+            </select>
+          </label>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="card">
+          <h3>Children (&lt;18)</h3>
+          <p id="demo-children">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Youth (18-24)</h3>
+          <p id="demo-youth">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Older Adults (65+)</h3>
+          <p id="demo-seniors">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Unaccompanied Youth</h3>
+          <p id="demo-unaccompainied">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Parenting Youth</h3>
+          <p id="demo-parenting-youth">--</p>
+        </div>
+
+        <div class="card">
+          <h3>Children of Parenting Youth</h3>
+          <p id="demo-parenting-children">--</p>
+        </div>
+      
+      </div>
+    `;
+
+    return;
+
+   }
     document.querySelector('#page-content').innerHTML = `
       <h1>${link.textContent}</h1>
 
