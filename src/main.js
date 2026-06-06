@@ -129,6 +129,12 @@ function updateDashboard() {
   );
 
   console.table(
+    filteredRows.filter(row =>
+      row.section === 'Demographics'
+    )
+  );
+
+  console.table(
     filteredRows.map(row => ({
       count_type: row.count_type,
       section: row.section,
@@ -335,6 +341,31 @@ countyDonutChart = new Chart(donutCtx, {
 });
 }
 
+function updateDemographics() {
+  const demoYear = document.querySelector('#demo-year-select').value;
+  const demoCounty = document.querySelector('#demo-county-select').value;
+  const demoPopulation = document.querySelector('#demo-population-select').value;
+
+  let demoRows = pitData.filter(row =>
+    row.year == demoYear &&
+    row.geography === demoCounty &&
+    row.section === 'Age Groups'
+  );
+
+  const childrenRows = demoRows.filter(row =>
+  row.metric === 'Number of Children < 18'
+);
+
+const childrenTotal = childrenRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-children').textContent = childrenTotal;
+
+  console.log('Demo rows found:', demoRows.length);
+}
+
 async function loadWorkbook() {
   const response = await fetch(DATA_FILE);
   const arrayBuffer = await response.arrayBuffer();
@@ -477,7 +508,7 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           <select id="demo-county-select">
             <option value="Combined">Combined</option>
             <option value="Amador">Amador</option>
-            <option value="Calaeras">Calaveras</option>
+            <option value="Calaveras">Calaveras</option>
             <option value="Mariposa">Mariposa</option>
             <option value="Tuolumne">Tuolumne</option>
           </select>
@@ -526,6 +557,22 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       
       </div>
     `;
+
+
+    document
+  .querySelector('#demo-year-select')
+  .addEventListener('change', updateDemographics);
+
+
+document
+  .querySelector('#demo-county-select')
+  .addEventListener('change', updateDemographics);
+
+document
+  .querySelector('#demo-population-select')
+  .addEventListener('change', updateDemographics);
+
+  updateDemographics();
 
     return;
 
