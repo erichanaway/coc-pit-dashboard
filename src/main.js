@@ -352,6 +352,12 @@ function updateDemographics() {
     row.section === 'Age Groups'
   );
 
+  if (demoPopulation !== 'All') {
+    demoRows = demoRows.filter(row =>
+      row.count_type === demoPopulation
+    );
+  }
+
   const childrenRows = demoRows.filter(row =>
   row.metric === 'Number of Children < 18'
 );
@@ -362,6 +368,81 @@ const childrenTotal = childrenRows.reduce(
 );
 
 document.querySelector('#demo-children').textContent = childrenTotal;
+
+const youthRows = demoRows.filter(row =>
+  row.metric === 'Number of Youth (18-24)'
+);
+
+const youthTotal = youthRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-youth').textContent = youthTotal;
+
+const seniorRows = demoRows.filter(row => 
+  row.metric === 'Number of adults (65 or older)'
+);
+
+const seniorTotal = seniorRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-seniors').textContent = seniorTotal;
+
+// Unacc Youth
+
+const unaccompaniedYouthRows = pitData.filter(row =>
+  row.year == demoYear &&
+  row.geography ===demoCounty &&
+  row.section === 'Unaccompanied Youth' &&
+  row.metric === 'Youth 18-24'
+);
+
+const unaccompaniedYouthTotal = unaccompaniedYouthRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-unaccompanied').textContent =
+unaccompaniedYouthTotal;
+
+// Parenting Youth
+
+const parentingYouthRows = pitData.filter(row =>
+  row.year == demoYear &&
+  row.geography === demoCounty &&
+  row.section === 'Parenting Youth' &&
+  row.metric === 'Parenting Youth 18-24'
+);
+
+const parentingYouthTotal = parentingYouthRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-parenting-youth').textContent = 
+parentingYouthTotal;
+
+// Children of Parenting Youth
+
+const parentingChildrenRows = pitData.filter(row =>
+  row.year == demoYear &&
+  row.geography === demoCounty &&
+  row.section === 'Parenting Youth' &&
+  row.metric === 'Children of Parenting youth'
+);
+
+const parentingChildrenTotal = parentingChildrenRows.reduce(
+  (sum, row) => sum + Number(row.value || 0),
+  0
+);
+
+document.querySelector('#demo-parenting-children').textContent =
+  parentingChildrenTotal;
+
+//
 
   console.log('Demo rows found:', demoRows.length);
 }
@@ -542,7 +623,7 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
         <div class="card">
           <h3>Unaccompanied Youth</h3>
-          <p id="demo-unaccompainied">--</p>
+          <p id="demo-unaccompanied">--</p>
         </div>
 
         <div class="card">
@@ -557,7 +638,6 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       
       </div>
     `;
-
 
     document
   .querySelector('#demo-year-select')
