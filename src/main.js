@@ -9,6 +9,7 @@ let compositionChart;
 let countyDonutChart;
 let sexChart;
 let raceChart;
+let ageChart;
 
 document.querySelector('#app').innerHTML = `
   <div class="app-layout">
@@ -453,7 +454,11 @@ const sexTotals = sexCategories.map(sex => {
     row.year == demoYear &&
     row.geography === demoCounty &&
     row.section === 'Sex' &&
-    row.metric === sex
+    row.metric === sex &&
+    (
+      demoPopulation === 'All' ||
+      row.count_type === demoPopulation
+    )
   );
 
   return rows.reduce(
@@ -537,7 +542,11 @@ const raceTotals = raceCategories.map(race => {
     row.year == demoYear &&
     row.geography === demoCounty &&
     row.section === 'Race' &&
-    row.metric === race
+    row.metric === race &&
+    (
+      demoPopulation === 'All' ||
+      row.count_type === demoPopulation
+    )
   );
 
   return rows.reduce(
@@ -593,6 +602,92 @@ raceChart = new Chart(raceCtx, {
   }
 });
 
+// Here
+
+const ageCategories = [
+  'Number of Children < 18',
+  'Number of Youth (18-24)',
+  'Number of adults (25-34)',
+  'Number of adults (35-44)',
+  'Number of adults (45-54)',
+  'Number of adults (55-64)',
+  'Number of adults (65 or older)'
+];
+
+const ageLabels = [
+  'Children <18',
+  'Youth 18-24',
+  'Adults 25-34',
+  'Adults 35-44',
+  'Adults 45-54',
+  'Adults 55-64',
+  'Adults 65+'
+];
+
+const ageTotals = ageCategories.map(age => {
+
+  const rows = pitData.filter(row =>
+    row.year == demoYear &&
+    row.geography === demoCounty &&
+    row.section === 'Age Groups' &&
+    row.metric === age &&
+    (
+      demoPopulation === 'All' ||
+      row.count_type === demoPopulation
+    )
+  );
+
+  return rows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+});
+
+const ageCtx = document
+  .getElementById('age-chart')
+  .getContext('2d');
+
+if (ageChart) {
+  ageChart.destroy();
+}
+
+ageChart = new Chart(ageCtx, {
+  type: 'bar',
+  data: {
+    labels: ageLabels,
+    datasets: [
+      {
+        label: 'People',
+        data: ageTotals,
+        backgroundColor: '#4e79a7',
+        borderRadius: 6
+      }
+    ]
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false
+      },
+
+      title: {
+        display: false
+      },
+
+      tooltip: {
+        enabled: true
+      }
+    },
+
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+// Above
 
   console.log('Demo rows found:', demoRows.length);
 }
@@ -803,6 +898,11 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       <div class="chart-card">
         <h2>Race Breakdown</h2>
         <canvas id="race-chart"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <h2>Age Distribution</h2>
+        <canvas id="age-chart"></canvas>
       </div>
     `;
 
