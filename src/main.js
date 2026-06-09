@@ -1,15 +1,31 @@
+// ============================
+// IMPORTS 
+// ============================
+
 import './style.css';
 import * as XLSX from 'xlsx';
 import Chart from 'chart.js/auto';
 
+// ============================
+// GLOBAL VARIABLES
+// ============================
+
+// Excel file used as the dashboard data source
 const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
 
+// Stores all PIT rows after the Excel workbook is loaded
 let pitData = [];
+
+// Chart.js instances used throughout the dashboard
 let compositionChart;
 let countyDonutChart;
 let sexChart;
 let raceChart;
 let ageChart;
+
+// ============================
+// INITIAL PAGE LAYOUT 
+// ============================
 
 document.querySelector('#app').innerHTML = `
   <div class="app-layout">
@@ -31,88 +47,90 @@ document.querySelector('#app').innerHTML = `
 
       <div id="page-content">
 
-    <h1>Central Sierra CoC PIT Dashboard</h1>
+        <h1>Central Sierra CoC PIT Dashboard</h1>
 
-    <p class="subtitle">
-      2026 Point In Time Count
-    </p>
+        <p class="subtitle">
+          2026 Point In Time Count
+        </p>
 
-    <div class="controls">
-      <label>
-        Year
-        <select id="year-select">
-          <option value="2026">2026</option>
-          <option value="2025">2025</option>
-        </select>
-      </label>
+        <div class="controls">
+          <label>
+            Year
+            <select id="year-select">
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+            </select>
+          </label>
 
-      <label>
-        County
-        <select id="county-select">
-          <option value="Combined">Combined</option>
-          <option value="Amador">Amador</option>
-          <option value="Calaveras">Calaveras</option>
-          <option value="Mariposa">Mariposa</option>
-          <option value="Tuolumne">Tuolumne</option>
-        </select>
-      </label>
-    </div>
+          <label>
+            County
+            <select id="county-select">
+              <option value="Combined">Combined</option>
+              <option value="Amador">Amador</option>
+              <option value="Calaveras">Calaveras</option>
+              <option value="Mariposa">Mariposa</option>
+              <option value="Tuolumne">Tuolumne</option>
+            </select>
+          </label>
+        </div>
 
-    <div class="kpi-grid">
-      <div class="card">
-        <h3>Total Households</h3>
-        <p id="total-households">--</p>
+        <div class="kpi-grid">
+          <div class="card">
+            <h3>Total Households</h3>
+            <p id="total-households">--</p>
+          </div>
+
+          <div class="card">
+            <h3>Total People</h3>
+            <p id="total-people">--</p>
+          </div>
+
+          <div class="card">
+            <h3>Sheltered Households</h3>
+            <p id="sheltered-households">--</p>
+          </div>
+
+          <div class="card">
+            <h3>Sheltered People</h3>
+            <p id="sheltered-people">--</p>
+          </div>
+
+          <div class="card">
+            <h3>Unsheltered Households</h3>
+            <p id="unsheltered-households">--</p>
+          </div>
+
+          <div class="card">
+            <h3>Unsheltered People</h3>
+            <p id="unsheltered-people">--</p>
+          </div>
+
+        </div>
+
+        <div class="charts-grid">
+
+          <div class="chart-card">
+            <canvas id="composition-chart"></canvas>
+          </div>
+
+          <div class="chart-card">
+            <canvas id="county-donut-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="footer">
+          Central Sierra CoC PIT Dashboard v1.2<br>
+          Developed by Eric Hanaway
+        </div>
+
       </div>
-
-      <div class="card">
-        <h3>Total People</h3>
-        <p id="total-people">--</p>
-      </div>
-
-      <div class="card">
-        <h3>Sheltered Households</h3>
-        <p id="sheltered-households">--</p>
-      </div>
-
-      <div class="card">
-        <h3>Sheltered People</h3>
-        <p id="sheltered-people">--</p>
-      </div>
-
-      <div class="card">
-        <h3>Unsheltered Households</h3>
-        <p id="unsheltered-households">--</p>
-      </div>
-
-      <div class="card">
-        <h3>Unsheltered People</h3>
-        <p id="unsheltered-people">--</p>
-      </div>
-
-    </div>
-
-    <div class="charts-grid">
-
-     <div class="chart-card">
-       <canvas id="composition-chart"></canvas>
-     </div>
-
-     <div class="chart-card">
-       <canvas id="county-donut-chart"></canvas>
-     </div>
-    </div>
-
-    <div class="footer">
-     Central Sierra CoC PIT Dashboard v1.12<br>
-     Developed by Eric Hanaway
-    </div>
-
-    </div>
   
-  </main>
+    </main>
 
   </div>
 `;
+
+// section 2
 
 document
   .querySelector('#year-select')
