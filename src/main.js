@@ -1,14 +1,14 @@
-// ============================
+// =================================
 // IMPORTS 
-// ============================
+// =================================
 
 import './style.css';
 import * as XLSX from 'xlsx';
 import Chart from 'chart.js/auto';
 
-// ============================
+// =================================
 // GLOBAL VARIABLES
-// ============================
+// =================================
 
 // Excel file used as the dashboard data source
 const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
@@ -23,9 +23,9 @@ let sexChart;
 let raceChart;
 let ageChart;
 
-// ============================
+// =================================
 // INITIAL PAGE LAYOUT 
-// ============================
+// =================================
 
 document.querySelector('#app').innerHTML = `
   <div class="app-layout">
@@ -132,6 +132,10 @@ document.querySelector('#app').innerHTML = `
 
 // section 2
 
+// =================================
+// OVERVIEW PAGE EVENT LISTENERS
+// =================================
+
 document
   .querySelector('#year-select')
   .addEventListener('change', updateDashboard);
@@ -140,21 +144,29 @@ document
   .querySelector('#county-select')
   .addEventListener('change', updateDashboard);
 
+// =================================
+// OVERVIEW DASHBOARD
+// =================================
+
 function updateDashboard() {
+  // Get the selected filter values from the overview dropdowns
   const selectedYear = document.querySelector('#year-select').value;
   const selectedCounty = document.querySelector('#county-select').value;
 
+  // Filter the full PIT dataset to the selected year and county
   const filteredRows = pitData.filter(row =>
     row.year == selectedYear &&
     row.geography === selectedCounty
   );
 
+  // DEBUG: Show demographic rows for the selected filters
   console.table(
     filteredRows.filter(row =>
       row.section === 'Demographics'
     )
   );
 
+  // DEBUG: Show simplified row data for troubleshooting
   console.table(
     filteredRows.map(row => ({
       count_type: row.count_type,
@@ -164,6 +176,7 @@ function updateDashboard() {
     }))
   );
 
+  // Find total household and total people rows
   const totalHouseholds = filteredRows.find(row =>
     row.section === 'Location and Family Type' &&
     row.metric === 'Total' &&
@@ -176,6 +189,7 @@ function updateDashboard() {
     row.count_type === 'People'
   );
 
+  // Calculate sheltered people from ES and TH rows
   const shelteredPeopleRows = filteredRows.filter(row =>
     row.section === 'Location and Family Type' &&
     row.count_type === 'People' &&
@@ -192,6 +206,7 @@ function updateDashboard() {
     0
   );
 
+  // Calculate unsheltered people
   const unshelteredPeopleRows = filteredRows.filter(row =>
     row.section === 'Location and Family Type' &&
     row.count_type === 'People' &&
@@ -206,6 +221,7 @@ function updateDashboard() {
     0
   );
 
+  // Calculate sheltered households from ES and TH rows
   const shelteredHouseholdsRows = filteredRows.filter(row =>
     row.section === 'Location and Family Type' &&
     row.count_type === 'Households' &&
@@ -222,13 +238,14 @@ function updateDashboard() {
     0
   );
 
+  // Calculate unsheltered households
   const unshelteredHouseholdsRows = filteredRows.filter(row =>
     row.section === 'Location and Family Type' &&
     row.count_type === 'Households' &&
-   (
-     row.metric === 'Unsheltered Adults Only' ||
-     row.metric === 'Unsheltered w/children'
-   )
+    (
+      row.metric === 'Unsheltered Adults Only' ||
+      row.metric === 'Unsheltered w/children'
+    )
   );
 
   const unshelteredHouseholds = unshelteredHouseholdsRows.reduce(
@@ -236,6 +253,9 @@ function updateDashboard() {
     0
   );
 
+  // Section 3
+
+  // Update overview KPI cards
   document.querySelector('#total-households').textContent =
     totalHouseholds?.value ?? '--';
 
@@ -245,7 +265,7 @@ function updateDashboard() {
   document.querySelector('#sheltered-people').textContent =
     shelteredPeople;
 
-  document.querySelector('#unsheltered-people').textContent = 
+  document.querySelector('#unsheltered-people').textContent =
     unshelteredPeople;
 
   document.querySelector('#sheltered-households').textContent =
@@ -254,6 +274,7 @@ function updateDashboard() {
   document.querySelector('#unsheltered-households').textContent =
     unshelteredHouseholds;
 
+  // Destroy existing charts before redrawing them
   if (compositionChart) {
     compositionChart.destroy();
   }
@@ -262,6 +283,7 @@ function updateDashboard() {
     countyDonutChart.destroy();
   }
   
+  // Build county totals for the donut chart
   const countyNames = [
     'Amador',
     'Calaveras',
@@ -270,10 +292,9 @@ function updateDashboard() {
   ];
 
   const countyTotals = countyNames.map(county => {
-
     const countyRows = pitData.filter(row => 
       row.year == selectedYear &&
-      row.geography ===county
+      row.geography === county
     );
 
     const totalPeopleRow = countyRows.find(row =>
@@ -285,9 +306,10 @@ function updateDashboard() {
     return Number(totalPeopleRow?.value || 0);
   });
 
+  // Create sheltered vs unsheltered bar chart
   const ctx = document
-  .getElementById('composition-chart')
-  .getContext('2d');
+    .getElementById('composition-chart')
+    .getContext('2d');
 
   compositionChart = new Chart(ctx, {
     type: 'bar',
@@ -323,43 +345,43 @@ function updateDashboard() {
         }
       }
     }
-  })
+  });
 
+  // Create county distribution donut chart
+  const donutCtx = document
+    .getElementById('county-donut-chart')
+    .getContext('2d');
 
-const donutCtx = document
-  .getElementById('county-donut-chart')
-  .getContext('2d');
+  countyDonutChart = new Chart(donutCtx, {
+    type: 'doughnut',
+    data: {
+      labels: countyNames,
+      datasets: [
+        {
+          data: countyTotals,
 
-countyDonutChart = new Chart(donutCtx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Amador', 'Calaveras', 'Mariposa', 'Tuolumne'],
-    datasets: [
-      {
-        data: countyTotals,
+          backgroundColor: [
+            '#4e79a7', // Amador
+            '#f28e2b', // Calaveras
+            '#59a14f', // Mariposa
+            '#e15759', // Tuolumne
+          ],
 
-        backgroundColor: [
-          '#4e79a7', // Amador
-          '#f28e2b', // Calaveras
-          '#59a14f', // Mariposa
-          '#e15759', // Tuolumne
-        ],
+          borderColor: '#ffffff',
+          borderWidth: 2
+        }
+      ]
+    },
 
-        borderColor: '#ffffff',
-        borderWidth:2
-      }
-    ]
-  },
-
-  options: {
-    plugins: {
-      title: {
-        display: true,
-        text: "County Share of Total Unhoused People"
-      }
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "County Share of Total Unhoused People"
+        }
+      } 
     }
-  }
-});
+  });
 }
 
 function updateDemographics() {
@@ -401,6 +423,8 @@ const youthTotal = youthRows.reduce(
 
 document.querySelector('#demo-youth').textContent = youthTotal;
 
+// Section 4
+
 const seniorRows = demoRows.filter(row => 
   row.metric === 'Number of adults (65 or older)'
 );
@@ -411,8 +435,6 @@ const seniorTotal = seniorRows.reduce(
 );
 
 document.querySelector('#demo-seniors').textContent = seniorTotal;
-
-// Unacc Youth
 
 const unaccompaniedYouthRows = pitData.filter(row =>
   row.year == demoYear &&
@@ -428,8 +450,6 @@ const unaccompaniedYouthTotal = unaccompaniedYouthRows.reduce(
 
 document.querySelector('#demo-unaccompanied').textContent =
 unaccompaniedYouthTotal;
-
-// Parenting Youth
 
 const parentingYouthRows = pitData.filter(row =>
   row.year == demoYear &&
