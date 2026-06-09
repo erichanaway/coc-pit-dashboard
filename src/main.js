@@ -7,6 +7,8 @@ const DATA_FILE = '/data/pit_2025_2026_dashboard_upload_data.xlsx';
 let pitData = [];
 let compositionChart;
 let countyDonutChart;
+let sexChart;
+let raceChart;
 
 document.querySelector('#app').innerHTML = `
   <div class="app-layout">
@@ -442,7 +444,155 @@ const parentingChildrenTotal = parentingChildrenRows.reduce(
 document.querySelector('#demo-parenting-children').textContent =
   parentingChildrenTotal;
 
-//
+
+const sexCategories = ['Male','Female', 'Unknown'];
+
+const sexTotals = sexCategories.map(sex => {
+
+  const rows = pitData.filter(row =>
+    row.year == demoYear &&
+    row.geography === demoCounty &&
+    row.section === 'Sex' &&
+    row.metric === sex
+  );
+
+  return rows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+});
+
+document.querySelector('#sex-male-total').textContent =
+  `Male: ${sexTotals[0]}`;
+
+document.querySelector('#sex-female-total').textContent =
+   `Female: ${sexTotals[1]}`;
+
+document.querySelector('#sex-unknown-total').textContent =
+  `Unknown: ${sexTotals[2]}`;
+
+
+const sexCtx = document
+  .getElementById('sex-chart')
+  .getContext('2d');
+
+if (sexChart) {
+  sexChart.destroy();
+}
+
+sexChart = new Chart(sexCtx, {
+  type: 'bar',
+  data: {
+    labels: sexCategories,
+    datasets: [
+      {
+        label: 'People',
+        data: sexTotals,
+        backgroundColor: '#4e79a7',
+        borderRadius: 6
+      }
+    ]
+  },
+  options: {
+  plugins: {
+    legend: {
+      display: false
+    },
+
+    title: {
+      display: false
+    },
+
+    tooltip: {
+      enabled: true
+    }
+  },
+
+  scales: {
+    y: {
+      beginAtZero: true
+    }
+  }
+}
+  
+});
+
+
+const raceCategories = [
+  'American Indian or Alaska Native or Indigenous',
+  'American Indian or Alaska Native or Indigenous and Hispanic/Latina/e/o',
+  'Asian or Asian American',
+  'Black or African American or African',
+  'Hispanic/Latina/o',
+  'Native Hawaiian or Pacific Islander',
+  'White',
+  'White and Hispanic/Latina/o',
+  'Multi-Racial and Hispanic/Latina/o',
+  'Unknown'
+];
+
+const raceTotals = raceCategories.map(race => {
+
+  const rows = pitData.filter(row =>
+    row.year == demoYear &&
+    row.geography === demoCounty &&
+    row.section === 'Race' &&
+    row.metric === race
+  );
+
+  return rows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+});
+
+const raceCtx = document
+  .getElementById('race-chart')
+  .getContext('2d');
+
+if (raceChart) {
+  raceChart.destroy();
+}
+
+raceChart = new Chart(raceCtx, {
+  type: 'bar',
+  data: {
+    labels: raceCategories,
+    datasets: [
+      {
+        label: 'People',
+        data: raceTotals,
+        backgroundColor: '#4e79a7',
+        borderRadius: 6
+      }
+    ]
+  },
+  options: {
+    indexAxis: 'y',
+
+    plugins: {
+      legend: {
+        display: false
+      },
+
+      title: {
+        display: false
+      },
+
+      tooltip: {
+        enabled: true
+      }
+    },
+
+    scales: {
+      x: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
 
   console.log('Demo rows found:', demoRows.length);
 }
@@ -636,6 +786,23 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           <p id="demo-parenting-children">--</p>
         </div>
       
+      </div>
+
+      <div class="chart-card">
+        <h2>Sex Breakdown</h2>
+
+        <canvas id="sex-chart"></canvas>
+
+        <div class="chart-legend">
+          <p id="sex-male-total"></p>
+          <p id="sex-female-total"></p>
+          <p id="sex-unknown-total"></p>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <h2>Race Breakdown</h2>
+        <canvas id="race-chart"></canvas>
       </div>
     `;
 
