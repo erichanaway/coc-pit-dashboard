@@ -744,6 +744,115 @@ ageChart = new Chart(ageCtx, {
   console.log('Demo rows found:', demoRows.length);
 }
 
+function updateOtherCategories() {
+  
+  const otherYear =
+    document.querySelector('#other-year-select').value;
+
+  const otherCounty =
+    document.querySelector('#other-county-select').value;
+
+  const otherPopulation = 
+    document.querySelector('#other-population-select').value;
+
+  let otherRows = pitData.filter(row =>
+    row.year == otherYear &&
+    row.geography === otherCounty &&
+    row.section === 'Other Categories'
+  );
+
+  if (otherPopulation !== "All") {
+    otherRows = otherRows.filter(row =>
+      row.count_type === otherPopulation
+    );
+  }
+  
+  console.log('Other rows found:', otherRows.length);
+
+  const chronicIndividualsRows = otherRows.filter(row =>
+    row.metric === 'Chronic Homeless Indiv.'
+  );
+
+  const chronicIndividualsTotal = chronicIndividualsRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-chronic-individuals').textContent =
+    chronicIndividualsTotal;
+
+  //
+
+  const veteranRows = otherRows.filter(row =>
+    row.metric === 'Veterans'
+  );
+
+  const veteranTotal = veteranRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-veterans').textContent =
+    veteranTotal;
+
+  //
+
+  const chronicVeteranRows = otherRows.filter(row =>
+    row.metric === 'Chronic Homeless Vets.'
+  );
+
+  const chronicVeteranTotal = chronicVeteranRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-chronic-veterans').textContent =
+    chronicVeteranTotal;
+  //
+
+  const mentalIllnessRows = otherRows.filter(row =>
+    row.metric === 'Mental Illness'
+  );
+
+  const mentalIllnessTotal = mentalIllnessRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-mental-illness').textContent =
+    mentalIllnessTotal;
+  //
+
+  const hivRows = otherRows.filter(row =>
+    row.metric === 'HIV/AIDS'
+  );
+
+  const hivTotal = hivRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-hiv').textContent =
+    hivTotal;
+
+  //
+
+  const dvRows = otherRows.filter(row =>
+    row.metric === 'Fleeing Domestic Violence'
+  );
+
+  const dvTotal = dvRows.reduce(
+    (sum, row) => sum + Number(row.value || 0),
+    0
+  );
+
+  document.querySelector('#other-dv').textContent =
+    dvTotal;
+
+
+  
+}
+
 // =================================
 // LOAD EXCEL WORKBOOK
 // =================================
@@ -1026,39 +1135,54 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
       <div class="kpi-grid">
 
-        <div class="kpi-card">
-          <h2>Chronic Homeless Individuals</h2>
+        <div class="card">
+          <h3>Chronic Homeless Individuals</h3>
           <p id="other-chronic-individuals">0</p>
         </div>
 
-        <div class="kpi-card">
-          <h2>Veterans</h2>
+        <div class="card">
+          <h3>Veterans</h3>
           <p id="other-veterans">0</p>
         </div>
 
-        <div class="kpi-card">
-          <h2>Chronic Homeless Veterans</h2>
+        <div class="card">
+          <h3>Chronic Homeless Veterans</h3>
           <p id="other-chronic-veterans">0</p>
         </div>
 
-        <div class="kpi-card">
-          <h2>Mental Illness</h2>
+        <div class="card">
+          <h3>Mental Illness</h3>
           <p id="other-mental-illness">0</p>
         </div>
 
-        <div class="kpi-card">
-          <h2>HIV/AIDS</h2>
+        <div class="card">
+          <h3>HIV/AIDS</h3>
           <p id="other-hiv">0</p>
         </div>
 
-        <div class="kpi-card">
-          <h2>Fleeing Domestic Violence</h2>
+        <div class="card">
+          <h3>Fleeing Domestic Violence</h3>
           <p id="other-dv">0</p>
         </div>
       
       </div>
         
     `;
+
+    document
+      .querySelector('#other-year-select')
+      .addEventListener('change', updateOtherCategories);
+
+    document
+      .querySelector('#other-county-select')
+      .addEventListener('change', updateOtherCategories);
+
+    document
+      .querySelector('#other-population-select')
+      .addEventListener('change', updateOtherCategories);
+
+    updateOtherCategories();
+
 
     return;
   }
