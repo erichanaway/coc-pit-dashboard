@@ -425,6 +425,7 @@ document.querySelector('#demo-youth').textContent = youthTotal;
 
 // Section 4
 
+// Calculate older adults KPI
 const seniorRows = demoRows.filter(row => 
   row.metric === 'Number of adults (65 or older)'
 );
@@ -436,11 +437,16 @@ const seniorTotal = seniorRows.reduce(
 
 document.querySelector('#demo-seniors').textContent = seniorTotal;
 
+// Calculate unaccompanied youth KPI
 const unaccompaniedYouthRows = pitData.filter(row =>
   row.year == demoYear &&
-  row.geography ===demoCounty &&
+  row.geography === demoCounty &&
   row.section === 'Unaccompanied Youth' &&
-  row.metric === 'Youth 18-24'
+  row.metric === 'Youth 18-24' &&
+  (
+    demoPopulation === 'All' ||
+    row.count_type === demoPopulation
+  )
 );
 
 const unaccompaniedYouthTotal = unaccompaniedYouthRows.reduce(
@@ -449,13 +455,18 @@ const unaccompaniedYouthTotal = unaccompaniedYouthRows.reduce(
 );
 
 document.querySelector('#demo-unaccompanied').textContent =
-unaccompaniedYouthTotal;
+  unaccompaniedYouthTotal;
 
+// Calculate parenting youth KPI
 const parentingYouthRows = pitData.filter(row =>
   row.year == demoYear &&
   row.geography === demoCounty &&
   row.section === 'Parenting Youth' &&
-  row.metric === 'Parenting Youth 18-24'
+  row.metric === 'Parenting Youth 18-24' &&
+  (
+    demoPopulation === 'All' ||
+    row.count_type === demoPopulation
+  )
 );
 
 const parentingYouthTotal = parentingYouthRows.reduce(
@@ -463,16 +474,19 @@ const parentingYouthTotal = parentingYouthRows.reduce(
   0
 );
 
-document.querySelector('#demo-parenting-youth').textContent = 
+document.querySelector('#demo-parenting-youth').textContent =
 parentingYouthTotal;
 
-// Children of Parenting Youth
-
+// Calculate children of parenting youth KPI
 const parentingChildrenRows = pitData.filter(row =>
   row.year == demoYear &&
   row.geography === demoCounty &&
   row.section === 'Parenting Youth' &&
-  row.metric === 'Children of Parenting youth'
+  row.metric === 'Children of Parenting youth' &&
+  (
+    demoPopulation === 'All' ||
+    row.count_type === demoPopulation
+  )
 );
 
 const parentingChildrenTotal = parentingChildrenRows.reduce(
@@ -483,11 +497,10 @@ const parentingChildrenTotal = parentingChildrenRows.reduce(
 document.querySelector('#demo-parenting-children').textContent =
   parentingChildrenTotal;
 
-
-const sexCategories = ['Male','Female', 'Unknown'];
+// Build sex totals
+const sexCategories = ['Male','Female','Unknown'];
 
 const sexTotals = sexCategories.map(sex => {
-
   const rows = pitData.filter(row =>
     row.year == demoYear &&
     row.geography === demoCounty &&
@@ -505,6 +518,7 @@ const sexTotals = sexCategories.map(sex => {
   );
 });
 
+// Update sex chart legend totals
 document.querySelector('#sex-male-total').textContent =
   `Male: ${sexTotals[0]}`;
 
@@ -514,7 +528,7 @@ document.querySelector('#sex-female-total').textContent =
 document.querySelector('#sex-unknown-total').textContent =
   `Unknown: ${sexTotals[2]}`;
 
-
+// Create sex breakdown bar chart
 const sexCtx = document
   .getElementById('sex-chart')
   .getContext('2d');
@@ -537,30 +551,31 @@ sexChart = new Chart(sexCtx, {
     ]
   },
   options: {
-  plugins: {
-    legend: {
-      display: false
+    plugins: {
+      legend: {
+        display: false
+      },
+
+      title: {
+        display: false
+      },
+
+      tooltip: {
+        enabled: true
+     }
     },
 
-    title: {
-      display: false
-    },
-
-    tooltip: {
-      enabled: true
-    }
-  },
-
-  scales: {
-    y: {
-      beginAtZero: true
+    scales: {
+      y: {
+        beginAtZero: true
+      }
     }
   }
-}
   
 });
 
-
+// Section 5
+// Build race totals
 const raceCategories = [
   'American Indian or Alaska Native or Indigenous',
   'American Indian or Alaska Native or Indigenous and Hispanic/Latina/e/o',
@@ -594,6 +609,7 @@ const raceTotals = raceCategories.map(race => {
 
 });
 
+// Create race breakdown bar chart
 const raceCtx = document
   .getElementById('race-chart')
   .getContext('2d');
@@ -640,8 +656,7 @@ raceChart = new Chart(raceCtx, {
   }
 });
 
-// Here
-
+// Build age totals
 const ageCategories = [
   'Number of Children < 18',
   'Number of Youth (18-24)',
@@ -725,10 +740,14 @@ ageChart = new Chart(ageCtx, {
   }
 });
 
-// Above
-
+// Section 6
+// DEBUG: Confirm demographic rows found for selected filters
   console.log('Demo rows found:', demoRows.length);
 }
+
+// =================================
+// LOAD EXCEL WORKBOOK
+// =================================
 
 async function loadWorkbook() {
   const response = await fetch(DATA_FILE);
@@ -751,8 +770,11 @@ async function loadWorkbook() {
   updateDashboard();
 }
 
-document.querySelectorAll('.sidebar a').forEach(link => {
+// =================================
+// PAGE NAVIGATION
+// =================================
 
+document.querySelectorAll('.sidebar a').forEach(link => {
   link.addEventListener('click', (event) => {
 
     event.preventDefault();
@@ -772,16 +794,17 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
     if (page === 'about') {
       document.querySelector('#page-content').innerHTML = `
-      <h1>About</h1>
-      <div class="about-card">
-        <h2>What is the Point-in-Time Count?</h2>
+        <h1>About</h1>
 
-        <p>
-          The Point-in-Time (PIT) Count is an annual count of people
-          experiencing homelessness conducted during the last ten days
-          of January. Required by HUD, the PIT Count provides a
-          snapshot of homelessness within a community on a single night.
-       </p>
+        <div class="about-card">
+          <h2>What is the Point-in-Time Count?</h2>
+
+          <p>
+           The Point-in-Time (PIT) Count is an annual count of people
+           experiencing homelessness conducted during the last ten days
+           of January. Required by HUD, the PIT Count provides a
+           snapshot of homelessness within a community on a single night.
+        </p>
       </div>
 
       <div class="about-card">
@@ -789,68 +812,68 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
         <p>
           The Central Sierra Continuum of Care serves four rural
-         counties in California:
-       </p>
+          counties in California:
+        </p>
 
         <ul>
           <li>Amador County</li>
           <li>Calaveras County</li>
           <li>Mariposa County</li>
-           <li>Tuolumne County</li>
-         </ul>
+          <li>Tuolumne County</li>
+        </ul>
        </div>
 
        <div class="about-card">
         <h2>About This Dashboard</h2>
 
-          <p>
-            This dashboard was developed to provide an interactive
-            view of Point-in-Time Count results across the
-            Central Sierra Continuum of Care.
-          </p>
+        <p>
+          This dashboard was developed to provide an interactive
+          view of Point-in-Time Count results across the
+          Central Sierra Continuum of Care.
+        </p>
 
-          <p>
-            Users can explore county-level results, compare
-            sheltered and unsheltered populations, and review
-            demographic information collected during the PIT Count.
-          </p>
-        </div>
+        <p>
+          Users can explore county-level results, compare
+          sheltered and unsheltered populations, and review
+          demographic information collected during the PIT Count.
+        </p>
+      </div>
 
-        <div class="about-card">
-          <h2>Data Sources</h2>
+      <div class="about-card">
+        <h2>Data Sources</h2>
 
-            <p>
-              Data presented in this dashboard is compiled from
-              multiple sources used to support the annual Point-in-Time
-              Count conducted by the Central Sierra Continuum of Care.
-            </p>
+        <p>
+          Data presented in this dashboard is compiled from
+          multiple sources used to support the annual Point-in-Time
+          Count conducted by the Central Sierra Continuum of Care.
+        </p>
 
-            <ul>
-              <li>Homeless Management Information System (HMIS) records</li>
-              <li>Unsheltered Point-in-Time Count survey responses</li>
-              <li>Sheltered Point-in-Time Count reporting submissions</li>
-              <li>HUD Point-in-Time Count reporting requirements and methodologies</li>
-            </ul>
-          </div>
+        <ul>
+          <li>Homeless Management Information System (HMIS) records</li>
+          <li>Unsheltered Point-in-Time Count survey responses</li>
+          <li>Sheltered Point-in-Time Count reporting submissions</li>
+          <li>HUD Point-in-Time Count reporting requirements and methodologies</li>
+        </ul>
+      </div>
 
-        <div class="about-card">
-          <h2>Dashboard Information</h2>
+      <div class="about-card">
+        <h2>Dashboard Information</h2>
 
-            <p><strong>Version:</strong> 1.12</p>
+        <p><strong>Version:</strong> 1.12</p>
 
-            <p><strong>Developed By:</strong> Eric Hanaway</p>
+        <p><strong>Developed By:</strong> Eric Hanaway</p>
 
-            <p>
-              HMIS Manager<br>
-              Central Sierra Continuum of Care (CA-526)
-            </p>
-        </div>
-      `;
+        <p>
+          HMIS Manager<br>
+          Central Sierra Continuum of Care (CA-526)
+        </p>
+      </div>
+    `;
 
-      return;
-    }
+    return;
+  }
 
-   if (page === 'demographics') {
+  if (page === 'demographics') {
     document.querySelector('#page-content').innerHTML = `
       <h1>Demographics</h1>
 
@@ -944,38 +967,38 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       </div>
     `;
 
-    document
-  .querySelector('#demo-year-select')
-  .addEventListener('change', updateDemographics);
+  document
+    .querySelector('#demo-year-select')
+    .addEventListener('change', updateDemographics);
 
 
-document
-  .querySelector('#demo-county-select')
-  .addEventListener('change', updateDemographics);
+  document
+    .querySelector('#demo-county-select')
+    .addEventListener('change', updateDemographics);
 
-document
-  .querySelector('#demo-population-select')
-  .addEventListener('change', updateDemographics);
+  document
+    .querySelector('#demo-population-select')
+    .addEventListener('change', updateDemographics);
 
   updateDemographics();
 
-    return;
+  return;
 
-   }
-    document.querySelector('#page-content').innerHTML = `
-      <h1>${link.textContent}</h1>
+}
+  document.querySelector('#page-content').innerHTML = `
+    <h1>${link.textContent}</h1>
 
-      <div class="coming-soon-card">
-        <h2>Coming Soon</h2>
+    <div class="coming-soon-card">
+      <h2>Coming Soon</h2>
 
-        <p>
-          This section is currently under development.
-        </p>
+      <p>
+        This section is currently under development.
+      </p>
 
-        <p>
-          Planned for a future dashboard release.
-        </p>
-      </div>
+      <p>
+        Planned for a future dashboard release.
+      </p>
+    </div>
     `;
   });
 
