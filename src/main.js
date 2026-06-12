@@ -35,8 +35,7 @@ document.querySelector('#app').innerHTML = `
       <nav>
         <a class="active" href="#" data-page="overview">Overview</a>
         <a href="#" data-page="demographics">Demographics</a>
-        <a href="#" data-page="veterans">Veterans</a>
-        <a href="#" data-page="chronic">Chronic</a>
+        <a href="#" data-page="other-categories">Other Categories</a>
         <a href="#" data-page="household-types">Household Types</a>
         <a href="#" data-page="county-comparison">County Comparison</a>
         <a href="#" data-page="about">About</a>
@@ -980,11 +979,90 @@ document.querySelectorAll('.sidebar a').forEach(link => {
     .querySelector('#demo-population-select')
     .addEventListener('change', updateDemographics);
 
-  updateDemographics();
+    updateDemographics();
 
-  return;
+    return;
 
-}
+  }
+
+  if (page === 'other-categories') {
+    document.querySelector('#page-content').innerHTML =`
+      <h1>Other Categories</h1>
+
+      <p class="subtitle">
+        Other populations and special populations identified in the PIT count.
+      </p>
+
+      <div class="controls">
+        <label>
+          Year
+          <select id="other-year-select">
+            <option value="2026">2026</option>
+            <option value="2025">2025</option>
+          </select>
+        </label>
+
+        <label>
+          County
+          <select id="other-county-select">
+            <option value="Combined">Combined</option>
+            <option value="Amador">Amador</option>
+            <option value="Calaveras">Calaveras</option>
+            <option value="Mariposa">Mariposa</option>
+            <option value="Tuolumne">Tuolumne</option>
+          </select>
+        </label>
+
+        <label>
+          Population
+          <select id="other-population-select">
+            <option value="All">All</option>
+            <option value="Sheltered">Sheltered</option>
+            <option value="Unsheltered">Unsheltered</option>
+          </select>
+        </label>
+
+      </div>
+
+      <div class="kpi-grid">
+
+        <div class="kpi-card">
+          <h2>Chronic Homeless Individuals</h2>
+          <p id="other-chronic-individuals">0</p>
+        </div>
+
+        <div class="kpi-card">
+          <h2>Veterans</h2>
+          <p id="other-veterans">0</p>
+        </div>
+
+        <div class="kpi-card">
+          <h2>Chronic Homeless Veterans</h2>
+          <p id="other-chronic-veterans">0</p>
+        </div>
+
+        <div class="kpi-card">
+          <h2>Mental Illness</h2>
+          <p id="other-mental-illness">0</p>
+        </div>
+
+        <div class="kpi-card">
+          <h2>HIV/AIDS</h2>
+          <p id="other-hiv">0</p>
+        </div>
+
+        <div class="kpi-card">
+          <h2>Fleeing Domestic Violence</h2>
+          <p id="other-dv">0</p>
+        </div>
+      
+      </div>
+        
+    `;
+
+    return;
+  }
+
   document.querySelector('#page-content').innerHTML = `
     <h1>${link.textContent}</h1>
 
