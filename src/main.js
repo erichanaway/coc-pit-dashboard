@@ -744,6 +744,78 @@ ageChart = new Chart(ageCtx, {
   console.log('Demo rows found:', demoRows.length);
 }
 
+//
+
+function updateDataTables() {
+    
+  const tableYear =
+      document.querySelector('#table-year-select').value;
+
+  const tableCounty = 
+    document.querySelector('#table-county-select').value;
+
+  const tableRows = pitData.filter(row =>
+      row.year == tableYear &&
+      row.geography === tableCounty
+  );
+
+  const locationRows = tableRows.filter(row =>
+    row.section === 'Location and Family Type'
+  );
+
+  const metrics = [
+    'ES Houses w/children',
+    'ES Adults Only',
+    'TH Households w/children',
+    'TH Adults Only',
+    'Unsheltered w/children',
+    'Unsheltered Adults Only',
+    'Total'
+  ];
+
+  const tableBody = metrics.map(metric => {
+
+    const householdRow = locationRows.find(row =>
+      row.metric === metric &&
+      row.count_type === 'Households'
+    );
+
+    const peopleRow = locationRows.find(row =>
+      row.metric === metric &&
+      row.count_type === 'People'
+    );
+
+    return `
+      <tr>
+        <td>${metric}</td>
+        <td>${householdRow?.value ?? 0}</td>
+        <td>${peopleRow?.value ?? 0}</td>
+      </tr>
+    `;
+  }).join('');
+
+  document.querySelector('#table-container').innerHTML = `
+    <div class="chart-card">
+      <h2>Location and Family Type</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Households</th>
+            <th>People</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${tableBody}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+
 function updateOtherCategories() {
   
   const otherYear =
@@ -1168,13 +1240,24 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
     <div class="controls">
       <label>
-        Table
-        <select id="table-select">
-          <option value="overview">Overview</option>
-          <option value="demographics">Demographics</option>
-          <option value="other-categories">Other Categories</option>
+        Year
+        <select id="table-year-select">
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
         </select>
       </label>
+
+      <label>
+        County
+        <select id="table-county-select">
+          <option value="Combined">Combined</option>
+          <option value="Amador">Amador</option>
+          <option value="Calaveras">Calaveras</option>
+          <option value="Mariposa">Mariposa</option>
+          <option value="Tuolumne">Tuolumne</option>
+        </select>
+      </label>
+
     </div>
 
     <div id="table-container">
@@ -1187,6 +1270,16 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       </div>
     </div>
   `;
+
+  document
+    .querySelector('#table-year-select')
+    .addEventListener('change', updateDataTables);
+
+  document
+    .querySelector('#table-county-select')
+    .addEventListener('change', updateDataTables);
+
+  updateDataTables();
 
   return;
 }
