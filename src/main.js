@@ -22,6 +22,7 @@ let countyDonutChart;
 let sexChart;
 let raceChart;
 let ageChart;
+let otherCategoriesChart;
 
 // =================================
 // INITIAL PAGE LAYOUT 
@@ -36,8 +37,7 @@ document.querySelector('#app').innerHTML = `
         <a class="active" href="#" data-page="overview">Overview</a>
         <a href="#" data-page="demographics">Demographics</a>
         <a href="#" data-page="other-categories">Other Categories</a>
-        <a href="#" data-page="household-types">Household Types</a>
-        <a href="#" data-page="county-comparison">County Comparison</a>
+        <a href="#" data-page="data-tables">Data Tables</a>
         <a href="#" data-page="about">About</a>
       </nav>
     </aside>
@@ -849,8 +849,72 @@ function updateOtherCategories() {
   document.querySelector('#other-dv').textContent =
     dvTotal;
 
+  //
 
-  
+  const otherCategoryLabels = [
+   'Chronic Individuals',
+    'Veterans',
+    'Chronic Veterans',
+    'Mental Illness',
+    'HIV/AIDS',
+    'Fleeing DV'
+  ];
+
+  const otherCategoryTotals = [
+    chronicIndividualsTotal,
+    veteranTotal,
+    chronicVeteranTotal,
+    mentalIllnessTotal,
+    hivTotal,
+    dvTotal
+  ];
+
+  const otherCtx = document
+    .getElementById('other-categories-chart')
+    .getContext('2d');
+
+  if (otherCategoriesChart) {
+    otherCategoriesChart.destroy();
+  }
+
+  otherCategoriesChart = new Chart(otherCtx, {
+    type: 'bar',
+
+    data: {
+      labels: otherCategoryLabels,
+
+      datasets: [
+        {
+          label: 'People',
+          data: otherCategoryTotals,
+          backgroundColor: '#4e79a7',
+          borderRadius: 6
+        }
+      ]
+    },
+
+    options: {
+      indexAxis: 'y',
+
+      plugins: {
+        legend: {
+          display: false
+        },
+
+        title: {
+          display: true,
+          text: 'Other Categories Breakdown'
+        }
+      },
+
+      scales: {
+        x: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+  ///
 }
 
 // =================================
@@ -1094,7 +1158,41 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
   }
 
+  if (page === 'data-tables') {
+  document.querySelector('#page-content').innerHTML = `
+    <h1>Data Tables</h1>
+
+    <p class="subtitle">
+      Explore detailed PIT count tables.
+    </p>
+
+    <div class="controls">
+      <label>
+        Table
+        <select id="table-select">
+          <option value="overview">Overview</option>
+          <option value="demographics">Demographics</option>
+          <option value="other-categories">Other Categories</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="table-container">
+      <div class="coming-soon-card">
+        <h2>Coming Soon</h2>
+
+        <p>
+          Interactive data tables will be available in Version 1.0.
+        </p>
+      </div>
+    </div>
+  `;
+
+  return;
+}
+
   if (page === 'other-categories') {
+    
     document.querySelector('#page-content').innerHTML =`
       <h1>Other Categories</h1>
 
@@ -1165,6 +1263,11 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           <p id="other-dv">0</p>
         </div>
       
+      </div>
+
+      <div class="chart-card">
+        <h2>Other Categories Breakdown</h2>
+        <canvas id="other-categories-chart"></canvas>
       </div>
         
     `;
