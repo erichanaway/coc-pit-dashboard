@@ -6,18 +6,21 @@ body {
 }
 
 .dashboard {
-  padding: 20px 35px;
+  padding: 28px 35px;
 }
 
 h1 { 
   margin-top: 0;
-  margin-bottom: 6px;
-  font-size: 1.7rem;
+  margin-bottom: 8px;
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #0f172a;
 }
 
 .subtitle {
-  color: #6b7280;
-  margin-bottom: 14px;
+  color: #475569;
+  margin-bottom: 22px;
+  font-size: 1.05rem;
 }
 
 .card {
@@ -25,10 +28,18 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   background: white;
-  padding: 14px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  min-height: 90px;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  min-height: 110px;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .controls {
@@ -59,10 +70,11 @@ select {
 }
 
 .card p {
-  font-weight: bold;
-  margin-top: 6px;
+  font-weight: 800;
+  margin-top: 10px;
   margin-bottom: 0;
-  font-size: 2.1rem;
+  font-size: 2.35rem;
+  color: #111827;
 }
 
 .chart-card {
@@ -71,6 +83,12 @@ select {
   border-radius: 12px;
   box-shadow: 0  2px 8px rgba(0,0,0,0.08);
   height: 245px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .charts-grid {
@@ -81,8 +99,11 @@ select {
 }
 
 .card h3 {
-  font-size: 0.85rem;
-  margin-bottom: 6px;
+  font-size: 0.78rem;
+  margin: 0;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .chart-card canvas {
@@ -111,8 +132,10 @@ select {
 
 .sidebar h2 {
   margin-top: 0;
-  margin-bottom: 30px;
-  font-size: 1.4rem;
+  margin-bottom: 36px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .sidebar nav {
@@ -124,9 +147,10 @@ select {
 .sidebar a {
   color: #d1d5db;
   text-decoration: none;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-weight: bold;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar a:hover,
@@ -142,6 +166,12 @@ select {
   margin-bottom: 24px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   max-width: 1000px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .about-card h2 {
@@ -201,4 +231,45 @@ select {
 
 .dashboard #page-content .chart-card {
   margin-top: 2rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+th {
+  background: #2563eb;
+  color: white;
+  text-align: left;
+  padding: 12px 14px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04rem;
+}
+
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+td:not(:first-child),
+th:not(:first-child) {
+  text-align: right;
+}
+
+tr {
+  transition: background-color 0.2s ease;
+}
+
+tr:hover {
+  background: #eef2ff;
 }
