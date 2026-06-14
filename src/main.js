@@ -794,6 +794,209 @@ function updateDataTables() {
     `;
   }).join('');
 
+  //
+
+  const ageGroupRows = tableRows.filter(row =>
+    row.section === 'Age Groups'
+  );
+
+  const ageMetrics = [
+    'Number of Children < 18',
+    'Number of Youth (18-24)',
+    'Number of adults (25-34)',
+    'Number of adults (35-44)',
+    'Number of adults (45-54)',
+    'Number of adults (55-64)',
+    'Number of adults (65 or older)'
+  ];
+
+  const ageTableBody = ageMetrics.map(metric => {
+
+    const shelteredRow = ageGroupRows.find(row =>
+      row.metric === metric &&
+      row.count_type === 'Sheltered'
+    );
+
+    const unshelteredRow = ageGroupRows.find(row =>
+      row.metric === metric &&
+      row.count_type === 'Unsheltered'
+    );
+
+    return `
+      <tr>
+        <td>${metric}</td>
+        <td>${shelteredRow?.value ?? 0}</td>
+        <td>${unshelteredRow?.value ?? 0}</td>
+      </tr>
+    `;
+  }).join('');
+
+  //
+
+  const sexRows = tableRows.filter(row =>
+    row.section ==='Sex'
+  );
+
+  const sexMetrics = [
+    'Female',
+    'Male',
+    'Unknown'
+  ];
+
+  const sexTableBody = sexMetrics.map(metric => {
+
+      const shelteredRow = sexRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Sheltered'
+      );
+
+      const unshelteredRow = sexRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Unsheltered'
+      );
+
+      return `
+        <tr>
+          <td>${metric}</td>
+          <td>${shelteredRow?.value ?? 0}</td>
+          <td>${unshelteredRow?.value ?? 0}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const raceRows = tableRows.filter(row =>
+      row.section === 'Race'
+    );
+    
+    const raceMetrics = [
+      'American Indian or Alaska Native or Indigenous',
+      'American Indian or Alaska Native or Indigenous and Hispanic/Latina/e/o',
+      'Asian or Asian American',
+      'Black or African American or African',
+      'Hispanic/Latina/o',
+      'Native Hawaiian or Pacific Islander',
+      'White',
+      'White and Hispanic/Latina/o',
+      'Multi-Racial and Hispanic/Latina/o',
+      'Unknown'
+    ];
+
+    const raceTableBody = raceMetrics.map(metric => {
+
+      const shelteredRow = raceRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Sheltered'
+      );
+
+      const unshelteredRow = raceRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Unsheltered'
+      );
+
+      return `
+        <tr>
+          <td>${metric}</td>
+          <td>${shelteredRow?.value ?? 0}</td>
+          <td>${unshelteredRow?.value ?? 0}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const youthRows = tableRows.filter(row =>
+      row.section === 'Unaccompanied Youth'
+    );
+
+    const youthMetrics = [
+      'Children <18',
+      'Youth 18-24'
+    ];
+
+    const youthTableBody = youthMetrics.map(metric => {
+
+      const shelteredRow = youthRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Sheltered'
+      );
+
+      const unshelteredRow = youthRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Unsheltered'
+      );
+
+      return `
+        <tr>
+          <td>${metric}</td>
+          <td>${shelteredRow?.value ?? 0}</td>
+          <td>${unshelteredRow?.value ?? 0}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const parentingRows = tableRows.filter(row =>
+      row.section === 'Parenting Youth'
+    );
+
+    const parentingMetrics = [
+      'Parenting Youth 18-24',
+      'Children of Parenting youth'
+    ];
+
+    const parentingTableBody = parentingMetrics.map(metric => {
+
+      const shelteredRow = parentingRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Sheltered'
+      );
+
+      const unshelteredRow = parentingRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Unsheltered'
+      );
+
+      return `
+        <tr>
+          <td>${metric}</td>
+          <td>${shelteredRow?.value ?? 0}</td>
+          <td>${unshelteredRow?.value ?? 0}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const otherRows = tableRows.filter(row =>
+      row.section === 'Other Categories'
+    );
+
+    const otherMetrics = [
+      'Chronic Homeless Indiv.',
+      'Veterans',
+      'Chronic Homeless Vets.',
+      'Mental Illness',
+      'HIV/AIDS',
+      'Fleeing Domestic Violence'
+    ];
+
+    const otherTableBody = otherMetrics.map(metric => {
+
+      const shelteredRow = otherRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Sheltered'
+      );
+
+      const unshelteredRow = otherRows.find(row =>
+        row.metric === metric &&
+        row.count_type === 'Unsheltered'
+      );
+
+      return `
+        <tr>
+          <td>${metric}</td>
+          <td>${shelteredRow?.value ?? 0}</td>
+          <td>${unshelteredRow?.value ?? 0}</td>
+        </tr>
+      `;
+    }).join('');
+
+
   document.querySelector('#table-container').innerHTML = `
     <div class="chart-card">
       <h2>Location and Family Type</h2>
@@ -809,6 +1012,114 @@ function updateDataTables() {
 
         <tbody>
           ${tableBody}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card">
+      <h2>Age Groups</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${ageTableBody}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card">
+      <h2>Sex</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${sexTableBody}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card">
+      <h2>Race</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${raceTableBody}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card">
+      <h2>Unaccompanied Youth</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${youthTableBody}
+        </tbody>
+      </table>
+    </div>
+
+        <div class="chart-card">
+      <h2>Parenting Youth</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${parentingTableBody}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-card">
+      <h2>Other Categories</h2>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Sheltered</th>
+            <th>Unsheltered</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${otherTableBody}
         </tbody>
       </table>
     </div>
@@ -924,9 +1235,9 @@ function updateOtherCategories() {
   //
 
   const otherCategoryLabels = [
-   'Chronic Individuals',
+    'Chronically Homeless Individuals',
     'Veterans',
-    'Chronic Veterans',
+    'Chronically Homeless Veterans',
     'Mental Illness',
     'HIV/AIDS',
     'Fleeing DV'
