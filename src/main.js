@@ -141,7 +141,7 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="footer">
-          Central Sierra CoC PIT Dashboard v1.3<br>
+          Central Sierra CoC PIT Dashboard v1.4<br>
           Developed by Eric Hanaway
         </div>
 
@@ -1437,7 +1437,7 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       <div class="about-card">
         <h2>Dashboard Information</h2>
 
-        <p><strong>Version:</strong> 1.12</p>
+        <p><strong>Version:</strong> 1.4</p>
 
         <p><strong>Developed By:</strong> Eric Hanaway</p>
 
