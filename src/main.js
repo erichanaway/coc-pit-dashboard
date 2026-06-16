@@ -74,36 +74,59 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="kpi-grid">
-          <div class="card">
-            <h3>Total Households</h3>
-            <p id="total-households">--</p>
+          <div class="card kpi-card">
+            <div class="kpi-icon blue-icon">🏠</div>
+
+            <div class="kpi-content">
+              <h3>Total Households</h3>
+              <p id="total-households">--</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Total People</h3>
-            <p id="total-people">--</p>
+          <div class="card kpi-card">
+            <div class="kpi-icon green-icon">👥</div>
+
+            <div class="kpi-content">
+              <h3>Total People</h3>
+              <p id="total-people">--</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Sheltered Households</h3>
-            <p id="sheltered-households">--</p>
+          <div class="card kpi-card">
+            <div class="kpi-icon purple-icon">🛏️</div>
+
+            <div class="kpi-content">
+              <h3>Sheltered Households</h3>
+              <p id="sheltered-households">--</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Sheltered People</h3>
-            <p id="sheltered-people">--</p>
+          <div class="card kpi-card">
+            <div class="kpi-icon teal-icon">🏡</div>
+
+            <div class="kpi-content">
+              <h3>Sheltered People</h3>
+              <p id="sheltered-people">--</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Unsheltered Households</h3>
-            <p id="unsheltered-households">--</p>
+          <div class="card kpi-card">
+            <div class="kpi-icon orange-icon">⛺</div>
+
+            <div class="kpi-content">
+              <h3>Unsheltered Households</h3>
+              <p id="unsheltered-households">--</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Unsheltered People</h3>
-            <p id="unsheltered-people">--</p>
-          </div>
+          <div class="card kpi-card">
+            <div class="kpi-icon red-icon">🌙</div>
 
+            <div class="kpi-content">
+              <h3>Unsheltered People</h3>
+              <p id="unsheltered-people">--</p>
+            </div>
+          </div>
         </div>
 
         <div class="charts-grid">
@@ -118,7 +141,7 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="footer">
-          Central Sierra CoC PIT Dashboard v1.2<br>
+          Central Sierra CoC PIT Dashboard v1.3<br>
           Developed by Eric Hanaway
         </div>
 

@@ -42,6 +42,64 @@ h1 {
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
+.kpi-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 14px;
+  align-items: center;
+}
+
+.kpi-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.8rem;
+  background: #eff6ff;
+}
+
+.blue-icon {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.green-icon {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.purple-icon {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.orange-icon {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.red-icon {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.teal-icon {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
+.kpi-content h3 {
+  margin: 0 0 8px 0;
+}
+
+.kpi-content p {
+  margin: 0;
+  font-weight: 800;
+  font-size: 2.8rem;
+  color: #0f172a;
+}
+
 .controls {
   display: flex;
   gap: 20px;
@@ -69,14 +127,6 @@ select {
   margin-top: 20px;
 }
 
-.card p {
-  font-weight: 800;
-  margin-top: 10px;
-  margin-bottom: 0;
-  font-size: 2.35rem;
-  color: #111827;
-}
-
 .chart-card {
   background: white;
   padding: 14px;
@@ -84,6 +134,7 @@ select {
   box-shadow: 0  2px 8px rgba(0,0,0,0.08);
   height: 245px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 450px;
 }
 
 .chart-card:hover {
@@ -99,11 +150,12 @@ select {
 }
 
 .card h3 {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   margin: 0;
-  color: #6b7280;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+  font-weight: 700;
 }
 
 .chart-card canvas {
@@ -206,10 +258,6 @@ select {
     grid-template-columns: 1fr;
   }
 
-}
-
-.chart-card {
-  min-height: 450px;
 }
 
 .chart-legend {
