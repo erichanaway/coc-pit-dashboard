@@ -570,8 +570,8 @@ sexChart = new Chart(sexCtx, {
         backgroundColor: [
           '#2563eb',
           '#16a34a',
-          '#f59e0b']
-
+          '#f59e0b'
+        ]
       }
     ]
   },
@@ -596,7 +596,7 @@ sexChart = new Chart(sexCtx, {
 
 // Section 5
 // Build race totals
-const raceCategories = [
+let raceCategories = [
   'American Indian or Alaska Native or Indigenous',
   'American Indian or Alaska Native or Indigenous and Hispanic/Latina/e/o',
   'Asian or Asian American',
@@ -609,7 +609,7 @@ const raceCategories = [
   'Unknown'
 ];
 
-const raceTotals = raceCategories.map(race => {
+let raceTotals = raceCategories.map(race => {
 
   const rows = pitData.filter(row =>
     row.year == demoYear &&
@@ -629,6 +629,16 @@ const raceTotals = raceCategories.map(race => {
 
 });
 
+const raceData = raceCategories
+  .map((race, index) => ({
+    race: race,
+    total: raceTotals[index]
+  }))
+  .sort((a, b) => b.total - a.total);
+
+raceCategories = raceData.map(item => item.race);
+raceTotals = raceData.map(item => item.total);
+
 // Create race breakdown bar chart
 const raceCtx = document
   .getElementById('race-chart')
@@ -641,12 +651,13 @@ if (raceChart) {
 raceChart = new Chart(raceCtx, {
   type: 'bar',
   data: {
+
     labels: raceCategories,
     datasets: [
       {
         label: 'People',
         data: raceTotals,
-        backgroundColor: '#4e79a7',
+        backgroundColor: '#14b8a6',
         borderRadius: 6
       }
     ]
@@ -670,7 +681,7 @@ raceChart = new Chart(raceCtx, {
 
     scales: {
       x: {
-        beginAtZero: true
+        type: 'logarithmic'
       }
     }
   }
