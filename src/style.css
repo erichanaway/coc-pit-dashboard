@@ -122,19 +122,18 @@ select {
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 18px;
   margin-top: 20px;
 }
 
 .chart-card {
   background: white;
-  padding: 14px;
-  border-radius: 12px;
-  box-shadow: 0  2px 8px rgba(0,0,0,0.08);
-  height: 245px;
+  padding: 18px;
+  border-radius: 16px;
+  box-shadow: 0  4px 14px rgba(0,0,0,0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-height: 450px;
+  min-height: 360px;
 }
 
 .chart-card:hover {
@@ -149,17 +148,30 @@ select {
   margin-top: 16px;
 }
 
+.demographics-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.full-width-chart {
+  grid-column: 1 / -1;
+}
+
 .card h3 {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin: 0;
   color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   font-weight: 700;
+  line-height: 1.1;
+  word-break: normal;
 }
 
 .chart-card canvas {
-  max-height: 215px;
+  max-height: 300px;
 }
 
 .footer {
@@ -275,10 +287,6 @@ select {
   margin: 0;
   font-weight: 700;
   color: #0f172a;
-}
-
-.dashboard #page-content .chart-card {
-  margin-top: 2rem;
 }
 
 table {

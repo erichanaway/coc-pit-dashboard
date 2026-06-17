@@ -49,7 +49,7 @@ document.querySelector('#app').innerHTML = `
         <h1>Central Sierra CoC PIT Dashboard</h1>
 
         <p class="subtitle">
-          2026 Point In Time Count
+          CA-526 Point-In-Time Count
         </p>
 
         <div class="controls">
@@ -1490,37 +1490,59 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       </div>
 
       <div class="kpi-grid">
-        <div class="card">
-          <h3>Children (&lt;18)</h3>
-          <p id="demo-children">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon blue-icon">👶</div>
+
+          <div class="kpi-content">
+            <h3>Children (&lt;18)</h3>
+            <p id="demo-children">--</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Youth (18-24)</h3>
-          <p id="demo-youth">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon green-icon">🧑</div>
+
+          <div class="kpi-content">
+            <h3>Youth (18-24)</h3>
+            <p id="demo-youth">--</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Older Adults (65+)</h3>
-          <p id="demo-seniors">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon purple-icon">👴</div>
+
+          <div class="kpi-content">
+            <h3>Older Adults (65+)</h3>
+            <p id="demo-seniors">--</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Unaccompanied Youth</h3>
-          <p id="demo-unaccompanied">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon orange-icon">🎒</div>
+
+          <div class="kpi-content">
+            <h3>Unaccompanied Youth</h3>
+            <p id="demo-unaccompanied">--</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Parenting Youth</h3>
-          <p id="demo-parenting-youth">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon teal-icon">👨‍👩‍👧</div>
+
+          <div class="kpi-content">
+            <h3>Parenting Youth</h3>
+            <p id="demo-parenting-youth">--</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Children of Parenting Youth</h3>
-          <p id="demo-parenting-children">--</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon red-icon">🍼</div>
+
+          <div class="kpi-content">
+            <h3>Children of Parenting Youth</h3>
+            <p id="demo-parenting-children">--</p>
+          </div>
         </div>
-      
-      </div>
 
       <div class="chart-card">
         <h2>Sex Breakdown</h2>
@@ -1660,36 +1682,60 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
       <div class="kpi-grid">
 
-        <div class="card">
-          <h3>Chronic Homeless Individuals</h3>
-          <p id="other-chronic-individuals">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon blue-icon">🏠</div>
+
+          <div class="kpi-content">
+            <h3>Chronic Homeless Individuals</h3>
+            <p id="other-chronic-individuals">0</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Veterans</h3>
-          <p id="other-veterans">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon green-icon">🎖️</div>
+
+          <div class="kpi-content">
+            <h3>Veterans</h3>
+            <p id="other-veterans">0</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Chronic Homeless Veterans</h3>
-          <p id="other-chronic-veterans">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon purple-icon">⭐</div>
+
+          <div class="kpi-content">
+            <h3>Chronic Homeless Veterans</h3>
+            <p id="other-chronic-veterans">0</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Mental Illness</h3>
-          <p id="other-mental-illness">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon orange-icon">🧠</div>
+
+          <div class="kpi-content">
+            <h3>Mental Illness</h3>
+            <p id="other-mental-illness">0</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>HIV/AIDS</h3>
-          <p id="other-hiv">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon teal-icon">❤️</div>
+
+          <div class="kpi-content">
+            <h3>HIV/AIDS</h3>
+            <p id="other-hiv">0</p>
+          </div>
         </div>
 
-        <div class="card">
-          <h3>Fleeing Domestic Violence</h3>
-          <p id="other-dv">0</p>
+        <div class="card kpi-card">
+          <div class="kpi-icon red-icon">🛡️</div>
+
+          <div class="kpi-content">
+            <h3>Fleeing Domestic Violence</h3>
+            <p id="other-dv">0</p>
+          </div>
         </div>
-      
+
       </div>
 
       <div class="chart-card">
