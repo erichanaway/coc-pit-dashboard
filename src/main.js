@@ -560,22 +560,25 @@ if (sexChart) {
 }
 
 sexChart = new Chart(sexCtx, {
-  type: 'bar',
+  type: 'doughnut',
   data: {
     labels: sexCategories,
     datasets: [
       {
         label: 'People',
         data: sexTotals,
-        backgroundColor: '#4e79a7',
-        borderRadius: 6
+        backgroundColor: [
+          '#2563eb',
+          '#16a34a',
+          '#f59e0b']
+
       }
     ]
   },
   options: {
     plugins: {
       legend: {
-        display: false
+        position: 'bottom'
       },
 
       title: {
@@ -587,11 +590,6 @@ sexChart = new Chart(sexCtx, {
      }
     },
 
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
   }
   
 });
@@ -1543,28 +1541,36 @@ document.querySelectorAll('.sidebar a').forEach(link => {
             <p id="demo-parenting-children">--</p>
           </div>
         </div>
+      </div>
 
-      <div class="chart-card">
-        <h2>Sex Breakdown</h2>
+      <div class="demographics-charts-grid">
 
-        <canvas id="sex-chart"></canvas>
+        <div class="chart-card">
+          <h2>Sex Breakdown</h2>
 
-        <div class="chart-legend">
-          <p id="sex-male-total"></p>
-          <p id="sex-female-total"></p>
-          <p id="sex-unknown-total"></p>
+          <canvas id="sex-chart"></canvas>
+
+          <div class="chart-legend">
+            <p id="sex-male-total"></p>
+            <p id="sex-female-total"></p>
+            <p id="sex-unknown-total"></p>
+          </div>
         </div>
+
+        <div class="chart-card">
+          <h2>Race Breakdown</h2>
+
+          <canvas id="race-chart"></canvas>
+        </div>
+
+        <div class="chart-card full-width-chart">
+          <h2>Age Distribution</h2>
+
+          <canvas id="age-chart"></canvas>
+        </div>
+
       </div>
 
-      <div class="chart-card">
-        <h2>Race Breakdown</h2>
-        <canvas id="race-chart"></canvas>
-      </div>
-
-      <div class="chart-card">
-        <h2>Age Distribution</h2>
-        <canvas id="age-chart"></canvas>
-      </div>
     `;
 
   document
