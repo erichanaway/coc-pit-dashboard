@@ -732,8 +732,16 @@ ageChart = new Chart(ageCtx, {
       {
         label: 'People',
         data: ageTotals,
-        backgroundColor: '#4e79a7',
-        borderRadius: 6
+        backgroundColor: [
+          '#4e79a7', // Children <18
+          '#f28e2b', // Youth 18-24
+          '#4e79a7', // Adults 25-34
+          '#f28e2b', // Adults 35-44
+          '#4e79a7', // Adults 45-54
+          '#f28e2b', // Adults 55-64
+          '#4e79a7'  // Adults 65+
+        ],
+        borderRadius: 10
       }
     ]
   },
@@ -1291,8 +1299,15 @@ function updateOtherCategories() {
         {
           label: 'People',
           data: otherCategoryTotals,
-          backgroundColor: '#4e79a7',
-          borderRadius: 6
+          backgroundColor: [
+            '#4e79a7',
+            '#f28e2b',
+            '#4e79a7',
+            '#f28e2b',
+            '#4e79a7',
+            '#f28e2b'
+          ],
+          borderRadius: 10
         }
       ]
     },
@@ -1306,8 +1321,7 @@ function updateOtherCategories() {
         },
 
         title: {
-          display: true,
-          text: 'Other Categories Breakdown'
+          display: false,
         }
       },
 
