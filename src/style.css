@@ -24,14 +24,10 @@ h1 {
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   background: white;
   padding: 18px;
   border-radius: 16px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-  min-height: 110px;
   border: 1px solid #e5e7eb;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: default;
@@ -43,61 +39,54 @@ h1 {
 }
 
 .kpi-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 14px;
-  align-items: center;
-}
-
-.kpi-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 1.8rem;
-  background: #eff6ff;
-}
-
-.blue-icon {
-  background: #dbeafe;
-  color: #2563eb;
-}
-
-.green-icon {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-.purple-icon {
-  background: #f3e8ff;
-  color: #9333ea;
-}
-
-.orange-icon {
-  background: #ffedd5;
-  color: #ea580c;
-}
-
-.red-icon {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-.teal-icon {
-  background: #ccfbf1;
-  color: #0f766e;
+  min-height: 135px;
+  color: white;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .kpi-content h3 {
-  margin: 0 0 8px 0;
+  margin: 0;
+  color: rgba(255,255,255,0.92);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  line-height: 1.15;
 }
 
 .kpi-content p {
-  margin: 0;
+  margin-top: 18px 0 0;
   font-weight: 800;
-  font-size: 2.8rem;
-  color: #0f172a;
+  font-size: 3rem;
+  color: white;
+  line-height: 1;
+}
+
+.kpi-blue {
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+}
+
+.kpi-teal {
+  background: linear-gradient(135deg, #0891b2, #0f766e);
+}
+
+.kpi-purple {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+}
+
+.kpi-green {
+  background: linear-gradient(135deg, #22c55e, #166534);
+}
+
+.kpi-orange {
+  background: linear-gradient(135deg, #f59e0b, #c2410c);
+}
+
+.kpi-red {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
 }
 
 .controls {
@@ -123,7 +112,7 @@ select {
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 18px;
+  gap: 14px;
   margin-top: 20px;
 }
 
@@ -157,17 +146,6 @@ select {
 
 .full-width-chart {
   grid-column: 1 / -1;
-}
-
-.card h3 {
-  font-size: 0.8rem;
-  margin: 0;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-weight: 700;
-  line-height: 1.1;
-  word-break: normal;
 }
 
 .chart-card canvas {

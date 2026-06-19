@@ -74,58 +74,47 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="kpi-grid">
-          <div class="card kpi-card">
-            <div class="kpi-icon blue-icon">🏠</div>
 
+          <div class="card kpi-card kpi-blue">
             <div class="kpi-content">
               <h3>Total Households</h3>
               <p id="total-households">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card">
-            <div class="kpi-icon green-icon">👥</div>
-
+          <div class="card kpi-card kpi-green">
             <div class="kpi-content">
               <h3>Total People</h3>
               <p id="total-people">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card">
-            <div class="kpi-icon purple-icon">🛏️</div>
-
+          <div class="card kpi-card kpi-purple">
             <div class="kpi-content">
               <h3>Sheltered Households</h3>
               <p id="sheltered-households">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card">
-            <div class="kpi-icon teal-icon">🏡</div>
-
+          <div class="card kpi-card kpi-teal">
             <div class="kpi-content">
               <h3>Sheltered People</h3>
               <p id="sheltered-people">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card">
-            <div class="kpi-icon orange-icon">⛺</div>
-
+          <div class="card kpi-card kpi-orange">
             <div class="kpi-content">
               <h3>Unsheltered Households</h3>
               <p id="unsheltered-households">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card">
-            <div class="kpi-icon red-icon">🌙</div>
-
+          <div class="card kpi-card kpi-red">
             <div class="kpi-content">
               <h3>Unsheltered People</h3>
               <p id="unsheltered-people">--</p>
-            </div>
+            </div>   
           </div>
         </div>
 
@@ -1499,59 +1488,49 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       </div>
 
       <div class="kpi-grid">
-        <div class="card kpi-card">
-          <div class="kpi-icon blue-icon">👶</div>
-
+      
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>Children (&lt;18)</h3>
             <p id="demo-children">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon green-icon">🧑</div>
-
+        <div class="card kpi-card kpi-green">
           <div class="kpi-content">
             <h3>Youth (18-24)</h3>
             <p id="demo-youth">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon purple-icon">👴</div>
-
+        <div class="card kpi-card kpi-purple">
           <div class="kpi-content">
             <h3>Older Adults (65+)</h3>
             <p id="demo-seniors">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon orange-icon">🎒</div>
-
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Unaccompanied Youth</h3>
             <p id="demo-unaccompanied">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon teal-icon">👨‍👩‍👧</div>
-
+        <div class="card kpi-card kpi-teal">
           <div class="kpi-content">
             <h3>Parenting Youth</h3>
             <p id="demo-parenting-youth">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon red-icon">🍼</div>
-
+        <div class="card kpi-card kpi-red">
           <div class="kpi-content">
             <h3>Children of Parenting Youth</h3>
             <p id="demo-parenting-children">--</p>
           </div>
         </div>
+
       </div>
 
       <div class="demographics-charts-grid">
@@ -1699,54 +1678,42 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
       <div class="kpi-grid">
 
-        <div class="card kpi-card">
-          <div class="kpi-icon blue-icon">🏠</div>
-
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>Chronic Homeless Individuals</h3>
             <p id="other-chronic-individuals">0</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon green-icon">🎖️</div>
-
+        <div class="card kpi-card kpi-green">
           <div class="kpi-content">
             <h3>Veterans</h3>
             <p id="other-veterans">0</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon purple-icon">⭐</div>
-
+        <div class="card kpi-card kpi-purple">
           <div class="kpi-content">
             <h3>Chronic Homeless Veterans</h3>
             <p id="other-chronic-veterans">0</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon orange-icon">🧠</div>
-
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Mental Illness</h3>
             <p id="other-mental-illness">0</p>
           </div>
         </div>
 
-        <div class="card kpi-card">
-          <div class="kpi-icon teal-icon">❤️</div>
-
+        <div class="card kpi-card kpi-teal">
           <div class="kpi-content">
             <h3>HIV/AIDS</h3>
             <p id="other-hiv">0</p>
           </div>
-        </div>
+        </div>  
 
-        <div class="card kpi-card">
-          <div class="kpi-icon red-icon">🛡️</div>
-
+        <div class="card kpi-card kpi-red">
           <div class="kpi-content">
             <h3>Fleeing Domestic Violence</h3>
             <p id="other-dv">0</p>
