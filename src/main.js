@@ -5,6 +5,10 @@
 import './style.css';
 import * as XLSX from 'xlsx';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { color } from 'chart.js/helpers';
+
+Chart.register(ChartDataLabels);
 
 // =================================
 // GLOBAL VARIABLES
@@ -353,6 +357,20 @@ function updateDashboard() {
         title: {
           display: true,
           text: "Sheltered vs Unsheltered"
+        },
+
+        datalabels: {
+          color: 'white',
+          font: {
+            weight: 'bold',
+            size: 13
+          }
+        }
+      },
+
+      scales: {
+        y: {
+          beginAtZero: true
         }
       }
     }
@@ -386,6 +404,14 @@ function updateDashboard() {
 
     options: {
       plugins: {
+        datalabels: {
+          color: 'white',
+          font: {
+            weight: 'bold',
+            size: 13
+          }
+        },
+
         title: {
           display: true,
           text: "County Share of Total Unhoused People"
@@ -566,6 +592,14 @@ sexChart = new Chart(sexCtx, {
   },
   options: {
     plugins: {
+      datalabels: {
+        color: 'white',
+        font: {
+          weight: 'bold',
+          size: 13
+        }
+      },
+      
       legend: {
         position: 'bottom'
       },
@@ -655,6 +689,16 @@ raceChart = new Chart(raceCtx, {
     indexAxis: 'y',
 
     plugins: {
+      datalabels: {
+        anchor: 'end',
+        align: 'right',
+        color: '#0f172a',
+        font: {
+          weight: 'bold',
+          size: 12
+        }
+      },
+
       legend: {
         display: false
       },
@@ -749,8 +793,21 @@ ageChart = new Chart(ageCtx, {
 
       tooltip: {
         enabled: true
+      },
+    
+
+      datalabels: {
+        anchor: 'end',
+        align: 'top',
+        offset: 4,
+        color: '#0f172a',
+        font: {
+          weight: 'bold',
+          size: 12
+        }
       }
     },
+  
 
     scales: {
       y: {
@@ -1308,6 +1365,16 @@ function updateOtherCategories() {
       indexAxis: 'y',
 
       plugins: {
+        datalabels: {
+          anchor: 'end',
+          align: 'right',
+          color: '#0f172a',
+          font: {
+            weight: 'bold',
+            size: 12
+          }
+        },
+
         legend: {
           display: false
         },
@@ -1450,6 +1517,11 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           Central Sierra Continuum of Care (CA-526)
         </p>
       </div>
+
+      <div class="footer">
+        Central Sierra CoC PIT Dashboard v1.5<br>
+        Developed by Eric Hanaway
+      </div>
     `;
 
     return;
@@ -1567,6 +1639,10 @@ document.querySelectorAll('.sidebar a').forEach(link => {
 
       </div>
 
+      <div class="footer">
+        Central Sierra CoC PIT Dashboard v1.5<br>
+        Developed by Eric Hanaway
+      </div>
     `;
 
   document
@@ -1626,6 +1702,11 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           Interactive data tables will be available in Version 1.0.
         </p>
       </div>
+    </div>
+
+    <div class="footer">
+      Central Sierra CoC PIT Dashboard v1.5<br>
+      Developed by Eric Hanaway
     </div>
   `;
 
@@ -1731,6 +1812,11 @@ document.querySelectorAll('.sidebar a').forEach(link => {
       <div class="chart-card">
         <h2>Other Categories Breakdown</h2>
         <canvas id="other-categories-chart"></canvas>
+      </div>
+
+      <div class="footer">
+        Central Sierra CoC PIT Dashboard v1.5<br>
+         Developed by Eric Hanaway
       </div>
         
     `;
