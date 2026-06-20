@@ -82,35 +82,35 @@ document.querySelector('#app').innerHTML = `
             </div>
           </div>
 
-          <div class="card kpi-card kpi-green">
+          <div class="card kpi-card kpi-orange">
             <div class="kpi-content">
               <h3>Total People</h3>
               <p id="total-people">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card kpi-purple">
+          <div class="card kpi-card kpi-blue">
             <div class="kpi-content">
               <h3>Sheltered Households</h3>
               <p id="sheltered-households">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card kpi-teal">
+          <div class="card kpi-card kpi-orange">
             <div class="kpi-content">
               <h3>Sheltered People</h3>
               <p id="sheltered-people">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card kpi-orange">
+          <div class="card kpi-card kpi-blue">
             <div class="kpi-content">
               <h3>Unsheltered Households</h3>
               <p id="unsheltered-households">--</p>
             </div>
           </div>
 
-          <div class="card kpi-card kpi-red">
+          <div class="card kpi-card kpi-orange">
             <div class="kpi-content">
               <h3>Unsheltered People</h3>
               <p id="unsheltered-people">--</p>
@@ -130,7 +130,7 @@ document.querySelector('#app').innerHTML = `
         </div>
 
         <div class="footer">
-          Central Sierra CoC PIT Dashboard v1.4<br>
+          Central Sierra CoC PIT Dashboard v1.5<br>
           Developed by Eric Hanaway
         </div>
 
@@ -333,7 +333,7 @@ function updateDashboard() {
             shelteredHouseholds,
             unshelteredHouseholds
           ],
-          backgroundColor: '#4e79a7',
+          backgroundColor: '#0f3a6d',
           borderRadius: 6
         },
         {
@@ -342,7 +342,7 @@ function updateDashboard() {
             shelteredPeople,
             unshelteredPeople
           ],
-          backgroundColor: '#f28e2b',
+          backgroundColor: '#f97316',
           borderRadius: 6
         }
       ]
@@ -372,10 +372,10 @@ function updateDashboard() {
           data: countyTotals,
 
           backgroundColor: [
-            '#4e79a7', // Amador
-            '#f28e2b', // Calaveras
-            '#59a14f', // Mariposa
-            '#e15759', // Tuolumne
+            '#0f3a6d',
+            '#f97316',
+            '#94a3b8',
+            '#cbd5e1'
           ],
 
           borderColor: '#ffffff',
@@ -557,9 +557,9 @@ sexChart = new Chart(sexCtx, {
         label: 'People',
         data: sexTotals,
         backgroundColor: [
-          '#2563eb',
-          '#16a34a',
-          '#f59e0b'
+          '#0f3a6d',
+          '#f97316',
+          '#94a3b8'
         ]
       }
     ]
@@ -646,7 +646,7 @@ raceChart = new Chart(raceCtx, {
       {
         label: 'People',
         data: raceTotals,
-        backgroundColor: '#14b8a6',
+        backgroundColor: '#0f3a6d',
         borderRadius: 6
       }
     ]
@@ -732,15 +732,7 @@ ageChart = new Chart(ageCtx, {
       {
         label: 'People',
         data: ageTotals,
-        backgroundColor: [
-          '#4e79a7', // Children <18
-          '#f28e2b', // Youth 18-24
-          '#4e79a7', // Adults 25-34
-          '#f28e2b', // Adults 35-44
-          '#4e79a7', // Adults 45-54
-          '#f28e2b', // Adults 55-64
-          '#4e79a7'  // Adults 65+
-        ],
+        backgroundColor: '#0f3a6d',
         borderRadius: 10
       }
     ]
@@ -1300,12 +1292,12 @@ function updateOtherCategories() {
           label: 'People',
           data: otherCategoryTotals,
           backgroundColor: [
-            '#4e79a7',
-            '#f28e2b',
-            '#4e79a7',
-            '#f28e2b',
-            '#4e79a7',
-            '#f28e2b'
+            '#0f3a6d',
+            '#f97316',
+            '#0f3a6d',
+            '#f97316',
+            '#0f3a6d',
+            '#f97316'
           ],
           borderRadius: 10
         }
@@ -1510,14 +1502,14 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           </div>
         </div>
 
-        <div class="card kpi-card kpi-green">
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Youth (18-24)</h3>
             <p id="demo-youth">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card kpi-purple">
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>Older Adults (65+)</h3>
             <p id="demo-seniors">--</p>
@@ -1531,14 +1523,14 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           </div>
         </div>
 
-        <div class="card kpi-card kpi-teal">
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>Parenting Youth</h3>
             <p id="demo-parenting-youth">--</p>
           </div>
         </div>
 
-        <div class="card kpi-card kpi-red">
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Children of Parenting Youth</h3>
             <p id="demo-parenting-children">--</p>
@@ -1699,14 +1691,14 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           </div>
         </div>
 
-        <div class="card kpi-card kpi-green">
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Veterans</h3>
             <p id="other-veterans">0</p>
           </div>
         </div>
 
-        <div class="card kpi-card kpi-purple">
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>Chronic Homeless Veterans</h3>
             <p id="other-chronic-veterans">0</p>
@@ -1720,14 +1712,14 @@ document.querySelectorAll('.sidebar a').forEach(link => {
           </div>
         </div>
 
-        <div class="card kpi-card kpi-teal">
+        <div class="card kpi-card kpi-blue">
           <div class="kpi-content">
             <h3>HIV/AIDS</h3>
             <p id="other-hiv">0</p>
           </div>
         </div>  
 
-        <div class="card kpi-card kpi-red">
+        <div class="card kpi-card kpi-orange">
           <div class="kpi-content">
             <h3>Fleeing Domestic Violence</h3>
             <p id="other-dv">0</p>
