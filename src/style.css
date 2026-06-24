@@ -40,16 +40,24 @@ h1 {
 
 .kpi-card {
   min-height: 135px;
-  color: white;
-  border: none;
+  background: white;
+  color: #0f172a;
+  border: 1px solid #e5e7eb;
+  border-top: 5px solid #0f3a6d;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
+
+.kpi-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 
 .kpi-content h3 {
   margin: 0;
-  color: rgba(255,255,255,0.92);
+  color: #0f172a;
   font-size: 1rem;
   font-weight: 700;
   text-transform: none;
@@ -58,35 +66,23 @@ h1 {
 }
 
 .kpi-content p {
-  margin-top: 18px 0 0;
+  margin: auto 0 40px;
   font-weight: 800;
   font-size: 3rem;
-  color: white;
+  color: #0f3a6d;
   line-height: 1;
 }
 
 .kpi-blue {
-  background: linear-gradient(135deg, #0f3a6d, #062245);
-}
-
-.kpi-teal {
-  background: linear-gradient(135deg, #0f3a6d, #062245);
-}
-
-.kpi-purple {
-  background: linear-gradient(135deg, #f97316, #c2410c);
-}
-
-.kpi-green {
-  background: linear-gradient(135deg, #0f3a6d, #062245);
+  border-top-color: #0f3a6d;
 }
 
 .kpi-orange {
-  background: linear-gradient(135deg, #f97316, #c2410c);
+  border-top-color: #f97316;
 }
 
-.kpi-red {
-  background: linear-gradient(135deg, #0f3a6d, #062245);
+.kpi-orange .kpi-content p {
+  color: #f97316;
 }
 
 .controls {
